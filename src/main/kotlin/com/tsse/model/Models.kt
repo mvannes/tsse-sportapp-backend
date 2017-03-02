@@ -1,6 +1,7 @@
 package com.tsse.model
 
 import java.util.*
+import javax.persistence.*
 
 /**
  * File containing all models contained in the database.
@@ -20,9 +21,10 @@ data class Schedule(val id: Long, val name: String,
 
 data class Workout(val id: Long, val name: String, val description: String, val exercises: List<Exercise>)
 
-data class Exercise(val id: Long, val name: String,
+@Entity
+data class Exercise(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long, val name: String,
                     val description: String, val category: Category,
-                    val mediaFiles: List<String>)
+                    @ElementCollection(targetClass = String::class) val mediaFiles: List<String>)
 
 data class ExerciseInfo(val id: Long, val exercise: Exercise, val sets: Int, val reps: Int, val weight: Double)
 
