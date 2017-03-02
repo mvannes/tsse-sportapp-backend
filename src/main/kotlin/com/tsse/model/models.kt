@@ -7,7 +7,7 @@ import java.util.*
  */
 data class User(val id: Long, val username: String, val password: String)
 
-open class Schedule(val id: Long, val name: String,
+data class Schedule(val id: Long, val name: String,
                     val description: String, val workouts: List<Workout>,
                     val amountOfTrainingsPerWeek: Int)
 
