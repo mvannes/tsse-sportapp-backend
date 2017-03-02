@@ -19,6 +19,7 @@ data class Schedule(val id: Long, val name: String,
                     val description: String, val workouts: List<Workout>,
                     val amountOfTrainingsPerWeek: Int)
 
+@Entity
 data class Workout(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long, val name: String,
                    val description: String,
                    @ElementCollection(targetClass = String::class) val exercises: List<Exercise>)
