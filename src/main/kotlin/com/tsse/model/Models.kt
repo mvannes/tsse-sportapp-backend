@@ -13,7 +13,9 @@ import javax.persistence.*
  *
  * @version 1.0.0
  */
-data class User(val id: Long, val username: String, val email: String, val password: String)
+@Entity
+data class User(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long,
+                val username: String, val email: String, val password: String)
 
 data class Schedule(val id: Long, val name: String,
                     val description: String, val workouts: List<Workout>,
