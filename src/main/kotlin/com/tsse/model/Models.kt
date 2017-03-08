@@ -22,9 +22,9 @@ data class Schedule(val id: Long, val name: String,
 data class Workout(val id: Long, val name: String, val description: String, val exercises: List<Exercise>)
 
 @Entity
-data class Exercise(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long, val name: String,
-                    val description: String, val category: Category,
-                    @ElementCollection(targetClass = String::class) val mediaFiles: List<String>)
+data class Exercise(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long = 0, val name: String = "",
+                    val description: String = "", @Enumerated(EnumType.ORDINAL) val category: Category = Category.DEFAULT,
+                    @ElementCollection(targetClass = String::class) val mediaFiles: List<String> = arrayListOf())
 
 data class ExerciseInfo(val id: Long, val exercise: Exercise, val sets: Int, val reps: Int, val weight: Double)
 
@@ -32,4 +32,6 @@ data class PersonalExercise(val user: User, val workout: Workout, val exerciseIn
 
 data class PersonalSchedule(val user: User, val schedule: Schedule, val startDate: Date, val endDate: Date)
 
-enum class Category
+enum class Category {
+    DEFAULT
+}
