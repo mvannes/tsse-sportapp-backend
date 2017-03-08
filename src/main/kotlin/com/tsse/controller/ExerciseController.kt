@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @RequestMapping("/api/exercises")
-class ExerciseController(@Autowired val repository: ExerciseRepository) {
+class ExerciseController @Autowired constructor(val repository: ExerciseRepository) {
 
     @PostMapping
     fun saveExercise(@RequestBody exercise: Exercise): ResponseEntity<Unit> {
