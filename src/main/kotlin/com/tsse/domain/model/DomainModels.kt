@@ -1,4 +1,4 @@
-package com.tsse.model
+package com.tsse.domain.model
 
 import java.util.*
 import javax.persistence.*
@@ -11,7 +11,7 @@ import javax.persistence.*
  * @author Fabian de Almeida Ramos
  * @author Boyd Hogerheijde
  *
- * @version 1.0.0
+ * @version 1.0.1
  */
 data class User(val id: Long, val username: String, val email: String, val password: String)
 
@@ -22,9 +22,24 @@ data class Schedule(val id: Long, val name: String,
 data class Workout(val id: Long, val name: String, val description: String, val exercises: List<Exercise>)
 
 @Entity
-data class Exercise(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long = 0, val name: String = "",
-                    val description: String = "", @Enumerated(EnumType.ORDINAL) val category: Category = Category.DEFAULT,
-                    @ElementCollection(targetClass = String::class) val mediaFiles: List<String> = arrayListOf())
+class Exercise() {
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long = 0
+    @Enumerated(EnumType.ORDINAL) var category: Category = Category.DEFAULT
+    @ElementCollection(targetClass = String::class) var mediaFiles: List<String> = arrayListOf()
+
+    lateinit var name: String
+    lateinit var description: String
+
+    constructor(name: String, description: String): this() {
+        this.name = name
+        this.description = description
+    }
+
+    override fun toString(): String {
+        return "Exercise(id=$id, category=$category, mediaFiles=$mediaFiles, name='$name', description='$description')"
+    }
+}
 
 data class ExerciseInfo(val id: Long, val exercise: Exercise, val sets: Int, val reps: Int, val weight: Double)
 
