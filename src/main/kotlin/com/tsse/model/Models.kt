@@ -18,9 +18,23 @@ data class User(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long
                 val username: String, val email: String, val password: String)
 
 @Entity
-data class Schedule(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long, val name: String,
-                    val description: String, @OneToMany(mappedBy = "schedule") val workouts: List<Workout>,
-                    val amountOfTrainingsPerWeek: Int)
+class Schedule() {
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long = 0
+    lateinit var name: String
+    lateinit var description: String
+    @OneToMany(targetEntity = Workout::class) val workouts: MutableList<Workout>? = null
+    var amountOfTrainingsPerWeek: Int = 0
+
+    constructor(name: String, description: String, workouts: List<Workout>, amountOfTrainingsPerWeek: Int) : this() {
+        this.name = name
+        this.description = description
+        this.workouts!!.addAll(workouts)
+        this.amountOfTrainingsPerWeek = amountOfTrainingsPerWeek
+
+    }
+
+}
 
 @Entity
 data class Workout(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long, val name: String,
