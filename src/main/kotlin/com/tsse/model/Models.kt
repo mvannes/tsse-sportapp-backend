@@ -1,7 +1,10 @@
 package com.tsse.model
 
+import org.hibernate.validator.constraints.NotBlank
 import java.util.*
 import javax.persistence.*
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Pattern
 
 /**
  * File containing all models contained in the database.
@@ -21,10 +24,10 @@ data class User(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long
 class Schedule() {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long = 0
-    lateinit var name: String
+    @NotBlank(message = "Schedule name cannot be empty!") lateinit var name: String
     lateinit var description: String
     @OneToMany(targetEntity = Workout::class) val workouts: MutableList<Workout>? = null
-    var amountOfTrainingsPerWeek: Int = 0
+    var amountOfTrainingsPerWeek: Int = 1
 
     constructor(name: String, description: String, workouts: List<Workout>, amountOfTrainingsPerWeek: Int) : this() {
         this.name = name
