@@ -28,7 +28,7 @@ class ScheduleController(val repository: ScheduleRepository, val service: Schedu
         val result: ResponseBody<Unit> = ResponseBody()
 
         if (errors.hasErrors()) {
-            result.msg = errors.fieldErrors.joinToString(", ")
+            result.msg = errors.allErrors.joinToString(", ")
             return ResponseEntity.badRequest().body(result)
         }
         if (service.saveSchedule(schedule)) {
@@ -49,6 +49,7 @@ class ScheduleController(val repository: ScheduleRepository, val service: Schedu
     fun getSchedule(@PathVariable id: Long): ResponseEntity<ResponseBody<Schedule>> {
 
         val result: ResponseBody<Schedule> = ResponseBody()
+
         val schedule: Schedule
         try {
             schedule = service.getSchedule(id)
@@ -63,14 +64,19 @@ class ScheduleController(val repository: ScheduleRepository, val service: Schedu
     }
 
     @GetMapping
-    fun getSchedules(): ResponseEntity<List<Schedule>> {
-        val schedules = repository.findAll().toList()
+    fun getSchedules(): ResponseEntity<ResponseBody<List<Schedule>>> {
 
-        return ResponseEntity.ok(schedules)
+        val result: ResponseBody<List<Schedule>> = ResponseBody()
+
+        result.msg = "Schedule list found!"
+        result.response = service.getAllSchedules()
+
+        return ResponseEntity.ok(result)
     }
 
     @PutMapping
-    fun updateSchedule(@RequestBody schedule: Schedule): ResponseEntity<Unit> {
+    fun updateSchedule(@Valid @RequestBody schedule: Schedule): ResponseEntity<ResponseBody<Unit>> {
+
         repository.save(schedule)
 
         return ResponseEntity(HttpStatus.OK)

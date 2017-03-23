@@ -12,4 +12,6 @@ interface ScheduleService {
 
     fun getSchedule()
 
+    fun getAllSchedules()
+
 }

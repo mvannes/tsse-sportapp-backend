@@ -25,4 +25,10 @@ class ScheduleServiceImpl(val repository: ScheduleRepository) {
         return schedule
     }
 
+    fun getAllSchedules(): List<Schedule> {
+
+        return repository.findAll().toList()
+
+    }
+
 }
