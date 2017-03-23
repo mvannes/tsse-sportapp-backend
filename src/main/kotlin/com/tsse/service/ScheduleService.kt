@@ -1,10 +1,15 @@
 package com.tsse.service
 
 /**
- * Created by fabian on 22/03/2017.
+ * Service used for schedules.
+ *
+ * @author Fabian de Almeida Ramos
+ * @version 1.0.0
  */
 interface ScheduleService {
 
     fun saveSchedule()
+
+    fun getSchedule()
 
 }

@@ -14,7 +14,7 @@ import javax.validation.constraints.Pattern
  * @author Fabian de Almeida Ramos
  * @author Boyd Hogerheijde
  *
- * @version 1.0.0
+ * @version 1.1.0
  */
 @Entity
 data class User(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long,

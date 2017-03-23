@@ -4,6 +4,7 @@ import com.tsse.ResponseBody
 import com.tsse.model.Schedule
 import com.tsse.repository.ScheduleRepository
 import com.tsse.service.ScheduleServiceImpl
+import javassist.NotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.Errors
@@ -14,6 +15,9 @@ import javax.validation.Valid
 
 /**
  * Controller used for REST operations related to schedules.
+ *
+ * @author Fabian de Almeida Ramos
+ * @version 1.0.0
  */
 @RestController
 @RequestMapping("/api/schedule")
@@ -21,7 +25,6 @@ class ScheduleController(val repository: ScheduleRepository, val service: Schedu
 
     @PostMapping
     fun saveSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): ResponseEntity<ResponseBody<Unit>> {
-
         val result: ResponseBody<Unit> = ResponseBody()
 
         if (errors.hasErrors()) {
@@ -43,10 +46,20 @@ class ScheduleController(val repository: ScheduleRepository, val service: Schedu
     }
 
     @GetMapping("/{id}")
-    fun getSchedule(@PathVariable id: Long): ResponseEntity<Schedule> {
-        val schedule = repository.findOne(id)
+    fun getSchedule(@PathVariable id: Long): ResponseEntity<ResponseBody<Schedule>> {
 
-        return ResponseEntity.ok(schedule)
+        val result: ResponseBody<Schedule> = ResponseBody()
+        val schedule: Schedule
+        try {
+            schedule = service.getSchedule(id)
+            result.response = schedule
+        } catch (ex: NotFoundException) {
+            result.msg = "Could not find schedule with id " + id
+            return ResponseEntity.badRequest().body(result)
+        }
+
+        result.msg = "Found schedule."
+        return ResponseEntity.ok(result)
     }
 
     @GetMapping

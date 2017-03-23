@@ -1,6 +1,7 @@
 package com.tsse.repository
 
 import com.tsse.model.Schedule
+import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.CrudRepository
 
 /**
@@ -10,4 +11,4 @@ import org.springframework.data.repository.CrudRepository
  *
  * @version 1.0.0
  */
-interface ScheduleRepository : CrudRepository<Schedule, Long>
+interface ScheduleRepository : JpaRepository<Schedule, Long>
