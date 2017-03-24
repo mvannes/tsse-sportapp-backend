@@ -23,3 +23,10 @@ class ExerciseNotFoundException : ResourceNotFoundException {
 
     constructor(name: String) : super("Exercise with name \'$name\' not found.")
 }
+
+class ScheduleNotFoundException: ResourceNotFoundException {
+    constructor(id: Long) : super("Exercise with id \'$id\' not found.")
+}
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+class invalidFormException(message: String) : RuntimeException("Object sent is not valid: $message")

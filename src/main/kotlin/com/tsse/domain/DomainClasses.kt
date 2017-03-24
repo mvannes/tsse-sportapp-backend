@@ -1,6 +1,7 @@
 package com.tsse.domain
 
 import org.hibernate.validator.constraints.NotBlank
+import org.hibernate.validator.constraints.Range
 import java.util.*
 import javax.persistence.*
 
@@ -13,13 +14,35 @@ import javax.persistence.*
  * @author Boyd Hogerheijde
  * @version 1.0.1
  */
-data class User(val id: Long, val username: String, val email: String, val password: String)
 
-data class Schedule(val id: Long, val name: String,
-                    val description: String, val workouts: List<Workout>,
-                    val amountOfTrainingsPerWeek: Int)
+@Entity
+data class User(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long,
+                val username: String, val email: String, val password: String)
 
-data class Workout(val id: Long, val name: String, val description: String, val exercises: List<Exercise>)
+@Entity
+class Schedule() {
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long = 0
+    @NotBlank(message = "Schedule name cannot be empty!") lateinit var name: String
+    lateinit var description: String
+    @OneToMany(targetEntity = Workout::class) val workouts: MutableList<Workout>? = null
+    @Range(min = 1, message = "Schedule needs at least one training per week!") var amountOfTrainingsPerWeek: Int = 1
+
+    constructor(name: String, description: String, workouts: List<Workout>, amountOfTrainingsPerWeek: Int) : this() {
+        this.name = name
+        this.description = description
+        this.workouts!!.addAll(workouts)
+        this.amountOfTrainingsPerWeek = amountOfTrainingsPerWeek
+
+    }
+
+}
+
+@Entity
+data class Workout(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long, val name: String,
+                   val description: String,
+                   @ElementCollection(targetClass = String::class) val exercises: List<Exercise>)
+
 
 @Entity
 class Exercise() {

@@ -2,6 +2,7 @@ package com.tsse.controller
 
 import com.tsse.ResponseBody
 import com.tsse.domain.Schedule
+import com.tsse.domain.invalidFormException
 import com.tsse.repository.ScheduleRepository
 import com.tsse.service.ScheduleServiceImpl
 import javassist.NotFoundException
@@ -24,43 +25,17 @@ import javax.validation.Valid
 class ScheduleController(val repository: ScheduleRepository, val service: ScheduleServiceImpl) {
 
     @PostMapping
-    fun saveSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): ResponseEntity<ResponseBody<Unit>> {
-        val result: ResponseBody<Unit> = ResponseBody()
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): Schedule {
+        validateRequest(errors)
 
-        if (errors.hasErrors()) {
-            result.msg = errors.allErrors.map { it.defaultMessage.toString() }.toString()
-            return ResponseEntity.badRequest().body(result)
-        }
-        if (service.saveSchedule(schedule)) {
-            result.msg = "Schedule created!"
-
-            val location: URI = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(schedule.id).toUri()
-
-            return ResponseEntity.created(location).body(result)
-        }
-        result.msg = "Could not save schedule"
-        return ResponseEntity.badRequest().body(result)
+        return service.saveSchedule(schedule)
     }
 
     @GetMapping("/{id}")
-    fun getSchedule(@PathVariable id: Long): ResponseEntity<ResponseBody<Schedule>> {
-
-        val result: ResponseBody<Schedule> = ResponseBody()
-
-        val schedule: Schedule
-        try {
-            schedule = service.getSchedule(id)
-            result.response = schedule
-        } catch (ex: NotFoundException) {
-            result.msg = "Could not find schedule with id " + id
-            return ResponseEntity.badRequest().body(result)
-        }
-
-        result.msg = "Found schedule."
-        return ResponseEntity.ok(result)
+    @ResponseStatus(HttpStatus.OK)
+    fun getSchedule(@PathVariable id: Long): Schedule {
+        return service.getSchedule(id)
     }
 
     @GetMapping
@@ -94,6 +69,15 @@ class ScheduleController(val repository: ScheduleRepository, val service: Schedu
 //        repository.delete(id)
 
         return ResponseEntity(HttpStatus.OK)
+    }
+
+    private fun validateRequest(errors: Errors) {
+        if (errors.hasErrors()) {
+
+            val errorMessages = errors.allErrors.map { it.defaultMessage }.toString()
+            throw invalidFormException(errorMessages)
+
+        }
     }
 
 

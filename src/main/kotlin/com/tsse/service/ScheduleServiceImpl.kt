@@ -1,6 +1,7 @@
 package com.tsse.service
 
 import com.tsse.domain.Schedule
+import com.tsse.domain.ScheduleNotFoundException
 import com.tsse.repository.ScheduleRepository
 import javassist.NotFoundException
 import org.springframework.stereotype.Service
@@ -14,16 +15,11 @@ import org.springframework.stereotype.Service
 @Service
 class ScheduleServiceImpl(val repository: ScheduleRepository) {
 
-    fun saveSchedule(schedule: Schedule): Boolean {
-        repository.save(schedule)
-
-        return true
+    fun saveSchedule(schedule: Schedule): Schedule {
+        return repository.save(schedule)
     }
 
-    fun getSchedule(id: Long): Schedule {
-        val schedule = repository.findOne(id) ?: throw NotFoundException("Schedule not found!")
-        return schedule
-    }
+    fun getSchedule(id: Long): Schedule = repository.findOne(id) ?: throw ScheduleNotFoundException(id)
 
     fun getAllSchedules(): List<Schedule> {
 
