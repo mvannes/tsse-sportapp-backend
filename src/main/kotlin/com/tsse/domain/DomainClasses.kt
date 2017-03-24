@@ -13,13 +13,19 @@ import javax.persistence.*
  * @author Boyd Hogerheijde
  * @version 1.0.1
  */
-data class User(val id: Long, val username: String, val email: String, val password: String)
+@Entity
+data class User(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long,
+                val username: String, val email: String, val password: String)
 
-data class Schedule(val id: Long, val name: String,
-                    val description: String, val workouts: List<Workout>,
+@Entity
+data class Schedule(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long, val name: String,
+                    val description: String, @OneToMany(mappedBy = "schedule") val workouts: List<Workout>,
                     val amountOfTrainingsPerWeek: Int)
 
-data class Workout(val id: Long, val name: String, val description: String, val exercises: List<Exercise>)
+@Entity
+data class Workout(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long, val name: String,
+                   val description: String,
+                   @ElementCollection(targetClass = String::class) val exercises: List<Exercise>)
 
 @Entity
 class Exercise() {
