@@ -1,6 +1,6 @@
 package com.tsse.repository
 
-import com.tsse.model.Workout
+import com.tsse.domain.Workout
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.rest.core.annotation.RepositoryRestResource
 

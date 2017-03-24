@@ -1,8 +1,7 @@
 package com.tsse.repository
 
-import com.tsse.model.Schedule
+import com.tsse.domain.Schedule
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.repository.CrudRepository
 
 /**
  * Repository for schedules.

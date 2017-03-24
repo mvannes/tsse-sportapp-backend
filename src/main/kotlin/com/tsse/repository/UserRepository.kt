@@ -1,6 +1,6 @@
 package com.tsse.repository
 
-import com.tsse.model.User
+import com.tsse.domain.User
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.rest.core.annotation.RepositoryRestResource
 

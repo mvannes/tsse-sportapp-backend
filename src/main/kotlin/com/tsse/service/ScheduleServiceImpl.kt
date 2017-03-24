@@ -1,6 +1,6 @@
 package com.tsse.service
 
-import com.tsse.model.Schedule
+import com.tsse.domain.Schedule
 import com.tsse.repository.ScheduleRepository
 import javassist.NotFoundException
 import org.springframework.stereotype.Service

@@ -1,7 +1,7 @@
 package com.tsse.controller
 
 import com.tsse.ResponseBody
-import com.tsse.model.Schedule
+import com.tsse.domain.Schedule
 import com.tsse.repository.ScheduleRepository
 import com.tsse.service.ScheduleServiceImpl
 import javassist.NotFoundException
@@ -11,7 +11,6 @@ import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.net.URI
-import java.util.*
 import javax.validation.Valid
 
 /**
@@ -92,7 +91,7 @@ class ScheduleController(val repository: ScheduleRepository, val service: Schedu
 
     @DeleteMapping("/{id}")
     fun deleteSchedule(@PathVariable id: Long): ResponseEntity<Unit> {
-        repository.delete(id)
+//        repository.delete(id)
 
         return ResponseEntity(HttpStatus.OK)
     }
