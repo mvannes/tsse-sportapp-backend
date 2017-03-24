@@ -11,6 +11,7 @@ import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.net.URI
+import java.util.*
 import javax.validation.Valid
 
 /**
@@ -28,7 +29,7 @@ class ScheduleController(val repository: ScheduleRepository, val service: Schedu
         val result: ResponseBody<Unit> = ResponseBody()
 
         if (errors.hasErrors()) {
-            result.msg = errors.allErrors.joinToString(", ")
+            result.msg = errors.allErrors.map { it.defaultMessage.toString() }.toString()
             return ResponseEntity.badRequest().body(result)
         }
         if (service.saveSchedule(schedule)) {
@@ -75,7 +76,14 @@ class ScheduleController(val repository: ScheduleRepository, val service: Schedu
     }
 
     @PutMapping
-    fun updateSchedule(@Valid @RequestBody schedule: Schedule): ResponseEntity<ResponseBody<Unit>> {
+    fun updateSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): ResponseEntity<ResponseBody<Unit>> {
+
+//        val result: ResponseBody<Unit> = ResponseBody()
+//
+//        if (errors.hasErrors()) {
+//            result.msg = errors.allErrors.joinToString {",\t"}
+//            return ResponseEntity.badRequest().body(result)
+//        }
 
         repository.save(schedule)
 
