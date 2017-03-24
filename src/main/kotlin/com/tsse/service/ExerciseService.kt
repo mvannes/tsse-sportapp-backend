@@ -1,6 +1,7 @@
 package com.tsse.service
 
-import com.tsse.domain.model.Exercise
+import com.tsse.domain.Category
+import com.tsse.domain.Exercise
 
 /**
  * Service interface for exercises.
@@ -15,6 +16,10 @@ interface ExerciseService {
     fun getAllExercises(): List<Exercise>
 
     fun getExerciseById(id: Long): Exercise
+
+    fun getExerciseByName(name: String): Exercise
+
+    fun getExercisesByCategory(category: Category): List<Exercise>
 
     fun updateExercise(exercise: Exercise): Exercise
 

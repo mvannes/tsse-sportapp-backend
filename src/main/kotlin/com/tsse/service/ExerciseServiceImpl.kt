@@ -2,7 +2,8 @@ package com.tsse.service
 
 import com.tsse.domain.ExerciseAlreadyExistsException
 import com.tsse.domain.ExerciseNotFoundException
-import com.tsse.domain.model.Exercise
+import com.tsse.domain.Category
+import com.tsse.domain.Exercise
 import com.tsse.repository.ExerciseRepository
 import org.springframework.stereotype.Service
 
@@ -25,14 +26,20 @@ class ExerciseServiceImpl(private val exerciseRepository: ExerciseRepository) : 
 
     override fun getAllExercises(): List<Exercise> = exerciseRepository.findAll()
 
+    override fun getExercisesByCategory(category: Category): List<Exercise> = exerciseRepository.findByCategory(category)
+
     override fun getExerciseById(id: Long): Exercise = exerciseRepository.findOne(id) ?: throw ExerciseNotFoundException(id)
+
+    override fun getExerciseByName(name: String): Exercise = exerciseRepository.findByName(name) ?: throw ExerciseNotFoundException(name)
 
     override fun updateExercise(exercise: Exercise): Exercise {
         getExerciseById(exercise.id)
+
         return exerciseRepository.save(exercise)
     }
 
     override fun deleteAllExercises() = exerciseRepository.deleteAll()
 
     override fun deleteExercise(id: Long) = exerciseRepository.delete(id)
+
 }

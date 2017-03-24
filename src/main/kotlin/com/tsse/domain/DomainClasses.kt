@@ -1,5 +1,6 @@
-package com.tsse.domain.model
+package com.tsse.domain
 
+import org.hibernate.validator.constraints.NotBlank
 import java.util.*
 import javax.persistence.*
 
@@ -10,7 +11,6 @@ import javax.persistence.*
  *
  * @author Fabian de Almeida Ramos
  * @author Boyd Hogerheijde
- *
  * @version 1.0.1
  */
 data class User(val id: Long, val username: String, val email: String, val password: String)
@@ -28,12 +28,16 @@ class Exercise() {
     @Enumerated(EnumType.ORDINAL) var category: Category = Category.DEFAULT
     @ElementCollection(targetClass = String::class) var mediaFiles: List<String> = arrayListOf()
 
-    lateinit var name: String
-    lateinit var description: String
+    @NotBlank(message = "Name cannot be empty.") lateinit var name: String
+    @NotBlank(message = "Description cannot be empty.") lateinit var description: String
 
     constructor(name: String, description: String): this() {
         this.name = name
         this.description = description
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return name == (other as Exercise).name
     }
 
     override fun toString(): String {

@@ -1,6 +1,7 @@
 package com.tsse.repository
 
-import com.tsse.domain.model.Exercise
+import com.tsse.domain.Category
+import com.tsse.domain.Exercise
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
@@ -15,4 +16,6 @@ import org.springframework.stereotype.Repository
 interface ExerciseRepository : JpaRepository<Exercise, Long> {
 
     fun findByName(name: String): Exercise?
+
+    fun findByCategory(category: Category): List<Exercise>
 }
