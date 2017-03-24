@@ -2,6 +2,7 @@ package com.tsse.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.tsse.domain.Exercise
+import com.tsse.domain.ExerciseNotFoundException
 import com.tsse.domain.ResourceNotFoundException
 import com.tsse.service.ExerciseService
 import org.hamcrest.Matchers.equalTo
@@ -62,7 +63,7 @@ class ExerciseControllerTests {
                 .andExpect(jsonPath("$[1].name", equalTo("Name 2")))
                 .andExpect(jsonPath("$[1].description", equalTo("Description 2.")))
 
-        verify(exerciseService, times(2)).getAllExercises()
+        verify(exerciseService, times(1)).getAllExercises()
         verifyNoMoreInteractions(exerciseService)
     }
 
@@ -83,7 +84,7 @@ class ExerciseControllerTests {
 
     @Test
     fun testGetExerciseById_ReturnsHttpStatusNotFound() {
-        given(exerciseService.getExerciseById(1L)).willThrow(ResourceNotFoundException::class.java)
+        given(exerciseService.getExerciseById(1L)).willThrow(ExerciseNotFoundException::class.java)
 
         mockMvc.perform(get("/api/exercises/{id}", 1L)).andExpect(status().isNotFound)
 
@@ -125,7 +126,7 @@ class ExerciseControllerTests {
 
     @Test
     fun testDeleteAllExercises_ReturnsHttpStatusNoContent() {
-        given(exerciseService.deleteAllExercises()).willReturn(Unit)
+        willDoNothing().given(exerciseService).deleteAllExercises()
 
         mockMvc.perform(
                 delete("/api/exercises"))
@@ -137,7 +138,7 @@ class ExerciseControllerTests {
 
     @Test
     fun testDeleteExerciseById_ReturnsHttpStatusNoContent() {
-        given(exerciseService.deleteExercise(1L)).willReturn(Unit)
+        willDoNothing().given(exerciseService).deleteExercise(1L)
 
         mockMvc.perform(
                 delete("/api/exercises/{id}", 1L))
