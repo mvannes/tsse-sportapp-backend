@@ -1,9 +1,8 @@
 package com.tsse.controller
 
+import com.tsse.domain.DataInvalidException
 import com.tsse.domain.Exercise
 import com.tsse.service.ExerciseService
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*
@@ -16,13 +15,11 @@ import javax.validation.Valid
  * @author Boyd Hogerheijde
  * @author Fabian de Almeida Ramos
  *
- * @version 1.0.0
+ * @version 1.1.0
  */
 @RestController
 @RequestMapping("/api/exercises")
 class ExerciseController(private val exerciseService: ExerciseService) {
-
-    private val log: Logger = LoggerFactory.getLogger(ExerciseController::class.java)
 
     /**
      * Controller method for creating a new exercise.
@@ -99,8 +96,7 @@ class ExerciseController(private val exerciseService: ExerciseService) {
     private fun validateRequest(errors: Errors) {
         if (errors.hasErrors()) {
             val errorMessages = errors.allErrors.map { it.defaultMessage }
-            errorMessages.forEach { log.error(it) }
-
+            throw DataInvalidException(errorMessages)
         }
     }
 

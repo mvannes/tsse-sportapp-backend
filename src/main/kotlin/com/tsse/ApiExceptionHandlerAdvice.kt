@@ -1,8 +1,9 @@
 package com.tsse
 
+import com.tsse.domain.ApiErrorResponse
+import com.tsse.domain.DataInvalidException
 import com.tsse.domain.ResourceAlreadyExistsException
 import com.tsse.domain.ResourceNotFoundException
-import com.tsse.domain.ApiErrorResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
@@ -22,26 +23,28 @@ import java.util.*
  * @version 1.0.0
  */
 @ControllerAdvice(basePackages = arrayOf("com.tsse.controller"), annotations = arrayOf(RestController::class))
-class GlobalApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
+class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
 
-    private val log: Logger = LoggerFactory.getLogger(GlobalApiExceptionHandlerAdvice::class.java)
+    private val log: Logger = LoggerFactory.getLogger(ApiExceptionHandlerAdvice::class.java)
 
     @ExceptionHandler(ResourceNotFoundException::class)
     fun handleNotFound(exception: RuntimeException, request: WebRequest): ResponseEntity<Any> {
-        log.error("Resource not found exception caught: $exception")
+        log.error("Not found exception caught: $exception")
 
-        val errorResponse = createResponse(exception, request)
-
-        return handleExceptionInternal(exception, errorResponse, HttpHeaders(), HttpStatus.NOT_FOUND, request)
+        return handleException(exception, request, HttpStatus.NOT_FOUND)
     }
 
-    @ExceptionHandler(ResourceAlreadyExistsException::class)
+    @ExceptionHandler(ResourceAlreadyExistsException::class, DataInvalidException::class)
     fun handleConflict(exception: RuntimeException, request: WebRequest): ResponseEntity<Any> {
-        log.error("Resource already exists exception caught: $exception")
+        log.error("Conflicting exception caught: $exception")
 
+        return handleException(exception, request, HttpStatus.CONFLICT)
+    }
+
+    private fun handleException(exception: RuntimeException, request: WebRequest, httpStatus: HttpStatus): ResponseEntity<Any> {
         val errorResponse = createResponse(exception, request)
 
-        return handleExceptionInternal(exception, errorResponse, HttpHeaders(), HttpStatus.CONFLICT, request)
+        return handleExceptionInternal(exception, errorResponse, HttpHeaders(), httpStatus, request)
     }
 
     private fun createResponse(exception: RuntimeException, request: WebRequest): ApiErrorResponse {

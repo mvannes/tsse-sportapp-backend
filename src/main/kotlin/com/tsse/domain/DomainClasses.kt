@@ -31,7 +31,7 @@ class Exercise() {
     @NotBlank(message = "Name cannot be empty.") lateinit var name: String
     @NotBlank(message = "Description cannot be empty.") lateinit var description: String
 
-    constructor(name: String, description: String): this() {
+    constructor(name: String, description: String) : this() {
         this.name = name
         this.description = description
     }
