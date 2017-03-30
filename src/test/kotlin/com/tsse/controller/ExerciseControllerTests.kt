@@ -40,7 +40,7 @@ class ExerciseControllerTests {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this::class)
+        MockitoAnnotations.initMocks(ExerciseControllerTests::class)
         mockMvc = MockMvcBuilders
                 .standaloneSetup(exerciseController)
                 .build()
@@ -118,6 +118,22 @@ class ExerciseControllerTests {
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(asJsonString(exercise)))
                 .andExpect(status().isOk)
+
+        verify(exerciseService, times(1)).updateExercise(exercise)
+        verifyNoMoreInteractions(exerciseService)
+    }
+
+    @Test
+    fun testUpdateExercise_ReturnsHttpStatusNotFound() {
+        val exercise = Exercise("Name", "Description.")
+
+        given(exerciseService.updateExercise(exercise)).willThrow(ExerciseNotFoundException::class.java)
+
+        mockMvc.perform(
+                put("/api/exercises")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(asJsonString(exercise)))
+                .andExpect(status().isNotFound)
 
         verify(exerciseService, times(1)).updateExercise(exercise)
         verifyNoMoreInteractions(exerciseService)
