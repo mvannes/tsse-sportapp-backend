@@ -1,5 +1,6 @@
-package com.tsse.model
+package com.tsse.domain
 
+import org.hibernate.validator.constraints.NotBlank
 import java.util.*
 import javax.persistence.*
 
@@ -10,8 +11,7 @@ import javax.persistence.*
  *
  * @author Fabian de Almeida Ramos
  * @author Boyd Hogerheijde
- *
- * @version 1.0.0
+ * @version 1.0.1
  */
 @Entity
 data class User(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long,
@@ -19,7 +19,7 @@ data class User(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long
 
 @Entity
 data class Schedule(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long, val name: String,
-                    val description: String, @OneToMany(mappedBy = "schedule") val workouts: List<Workout>,
+                    val description: String, @OneToMany(targetEntity = Schedule::class) val workouts: List<Workout>,
                     val amountOfTrainingsPerWeek: Int)
 
 @Entity
@@ -28,9 +28,28 @@ data class Workout(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: L
                    @ElementCollection(targetClass = String::class) val exercises: List<Exercise>)
 
 @Entity
-data class Exercise(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long, val name: String,
-                    val description: String, val category: Category,
-                    @ElementCollection(targetClass = String::class) val mediaFiles: List<String>)
+class Exercise() {
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long = 0
+    @Enumerated(EnumType.ORDINAL) var category: Category = Category.DEFAULT
+    @ElementCollection(targetClass = String::class) var mediaFiles: List<String> = arrayListOf()
+
+    @NotBlank(message = "Name cannot be empty.") lateinit var name: String
+    @NotBlank(message = "Description cannot be empty.") lateinit var description: String
+
+    constructor(name: String, description: String) : this() {
+        this.name = name
+        this.description = description
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return name == (other as Exercise).name
+    }
+
+    override fun toString(): String {
+        return "Exercise(id=$id, category=$category, mediaFiles=$mediaFiles, name='$name', description='$description')"
+    }
+}
 
 data class ExerciseInfo(val id: Long, val exercise: Exercise, val sets: Int, val reps: Int, val weight: Double)
 
@@ -38,4 +57,6 @@ data class PersonalExercise(val user: User, val workout: Workout, val exerciseIn
 
 data class PersonalSchedule(val user: User, val schedule: Schedule, val startDate: Date, val endDate: Date)
 
-enum class Category
+enum class Category {
+    DEFAULT
+}
