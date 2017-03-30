@@ -1,15 +1,14 @@
 package com.tsse.repository
 
 import com.tsse.domain.Workout
-import org.springframework.data.repository.CrudRepository
-import org.springframework.data.rest.core.annotation.RepositoryRestResource
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
 /**
  * Repository for workouts.
  *
  * @author Fabian de Almeida Ramos
- *
  * @version 1.0.0
  */
-@RepositoryRestResource
-interface WorkoutRepository : CrudRepository<Workout, Long>
+@Repository
+interface WorkoutRepository: JpaRepository<Workout, Long>

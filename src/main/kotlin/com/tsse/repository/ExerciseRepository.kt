@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository
 /**
  * Repository for exercises.
  *
- * @author Fabian de Almeida Ramos
  * @author Boyd Hogerheijde
  * @version 1.0.1
  */

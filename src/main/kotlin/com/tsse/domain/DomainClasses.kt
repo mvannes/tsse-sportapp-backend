@@ -14,7 +14,6 @@ import javax.persistence.*
  * @author Boyd Hogerheijde
  * @version 1.0.1
  */
-
 @Entity
 data class User(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long,
                 val username: String, val email: String, val password: String)
@@ -53,7 +52,7 @@ class Exercise() {
     @NotBlank(message = "Name cannot be empty.") lateinit var name: String
     @NotBlank(message = "Description cannot be empty.") lateinit var description: String
 
-    constructor(name: String, description: String): this() {
+    constructor(name: String, description: String) : this() {
         this.name = name
         this.description = description
     }

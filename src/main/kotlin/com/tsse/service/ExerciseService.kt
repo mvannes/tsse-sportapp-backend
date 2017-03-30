@@ -2,6 +2,7 @@ package com.tsse.service
 
 import com.tsse.domain.Category
 import com.tsse.domain.Exercise
+import org.springframework.validation.Errors
 
 /**
  * Service interface for exercises.

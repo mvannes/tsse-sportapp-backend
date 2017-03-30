@@ -30,7 +30,7 @@ class ExerciseServiceTests {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this::class)
+        MockitoAnnotations.initMocks(ExerciseServiceTests::class)
         exerciseService = ExerciseServiceImpl(exerciseRepository)
     }
 

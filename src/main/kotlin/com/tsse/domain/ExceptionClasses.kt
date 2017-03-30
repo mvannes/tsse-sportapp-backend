@@ -24,6 +24,8 @@ class ExerciseNotFoundException : ResourceNotFoundException {
     constructor(name: String) : super("Exercise with name \'$name\' not found.")
 }
 
+class DataInvalidException(errorMessages: List<String>) : RuntimeException(errorMessages.toString())
+
 class ScheduleNotFoundException: ResourceNotFoundException {
     constructor(id: Long) : super("Schedule with id \'$id\' not found.")
 }

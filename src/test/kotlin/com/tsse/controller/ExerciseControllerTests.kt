@@ -3,7 +3,6 @@ package com.tsse.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.tsse.domain.Exercise
 import com.tsse.domain.ExerciseNotFoundException
-import com.tsse.domain.ResourceNotFoundException
 import com.tsse.service.ExerciseService
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
@@ -41,7 +40,7 @@ class ExerciseControllerTests {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this::class)
+        MockitoAnnotations.initMocks(ExerciseControllerTests::class)
         mockMvc = MockMvcBuilders
                 .standaloneSetup(exerciseController)
                 .build()
@@ -125,6 +124,22 @@ class ExerciseControllerTests {
     }
 
     @Test
+    fun testUpdateExercise_ReturnsHttpStatusNotFound() {
+        val exercise = Exercise("Name", "Description.")
+
+        given(exerciseService.updateExercise(exercise)).willThrow(ExerciseNotFoundException::class.java)
+
+        mockMvc.perform(
+                put("/api/exercises")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(asJsonString(exercise)))
+                .andExpect(status().isNotFound)
+
+        verify(exerciseService, times(1)).updateExercise(exercise)
+        verifyNoMoreInteractions(exerciseService)
+    }
+
+    @Test
     fun testDeleteAllExercises_ReturnsHttpStatusNoContent() {
         willDoNothing().given(exerciseService).deleteAllExercises()
 
@@ -145,7 +160,7 @@ class ExerciseControllerTests {
                 .andExpect(status().isNoContent)
 
         verify(exerciseService, times(1)).deleteExercise(1L)
-        Mockito.verifyNoMoreInteractions(exerciseService)
+        verifyNoMoreInteractions(exerciseService)
     }
 
     private fun asJsonString(obj: Any): String = ObjectMapper().writeValueAsString(obj)
