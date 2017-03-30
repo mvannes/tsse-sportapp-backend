@@ -9,16 +9,14 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.BDDMockito.given
-import org.mockito.BDDMockito.verify
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.times
 import org.mockito.MockitoAnnotations
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import java.util.*
@@ -134,7 +132,7 @@ class ScheduleControllerTest {
     @Test
     fun testGetAllSchedules_returnsHttpStatusOk() {
 
-        val results: List<Schedule> = arrayListOf(Schedule("Name", "Description", ArrayList(), 0),
+        val results = arrayListOf(Schedule("Name", "Description", ArrayList(), 0),
                 Schedule("Name2", "Description2", ArrayList(), 0))
 
 
@@ -148,7 +146,52 @@ class ScheduleControllerTest {
 
     }
 
-    
+    @Test
+    fun testUpdateSchedule_returnsHttpStatusOk() {
+        val schedule = Schedule("Name", "Description", ArrayList(), 1)
+
+        given(service.updateSchedule(schedule)).willReturn(schedule)
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put(uri)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(asJsonString(schedule)))
+                .andExpect(status().isOk)
+                .andExpect { content().equals(schedule) }
+
+    }
+
+
+    @Test
+    fun testUpdateScheduleInvalidForm_returnsHttpStatusBadRequest() {
+
+        val schedule = Schedule("", "Description", ArrayList(), 1)
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put(uri)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(asJsonString(schedule)))
+                .andExpect(status().isBadRequest)
+                .andExpect { jsonPath("message", equalTo("Object sent is not valid: [Schedule name cannot be empty!]")) }
+
+    }
+
+//    @Test
+//    fun testUpdateScheduleNonExistingSchedule_returnsHttpStatusNotFound() {
+//
+//        val schedule = Schedule("Name", "Description", ArrayList(), 1)
+//
+//        given(service.updateSchedule(schedule)).willThrow(ScheduleNotFoundException::class.java)
+//
+//        mockMvc.perform(
+//                MockMvcRequestBuilders.put(uri)
+//                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+//                        .content(asJsonString(schedule)))
+//                .andExpect(status().isNotFound)
+//
+//    }
+
+
 
 
     private fun asJsonString(obj: Any): String = ObjectMapper().writeValueAsString(obj)
