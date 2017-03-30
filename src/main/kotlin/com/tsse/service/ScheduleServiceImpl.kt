@@ -3,7 +3,6 @@ package com.tsse.service
 import com.tsse.domain.Schedule
 import com.tsse.domain.ScheduleNotFoundException
 import com.tsse.repository.ScheduleRepository
-import javassist.NotFoundException
 import org.springframework.stereotype.Service
 
 /**
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Service
  * @version 1.0.0
  */
 @Service
-class ScheduleServiceImpl(val repository: ScheduleRepository): ScheduleService {
+class ScheduleServiceImpl(val repository: ScheduleRepository) : ScheduleService {
 
     override fun saveSchedule(schedule: Schedule): Schedule {
         return repository.save(schedule)
@@ -25,6 +24,11 @@ class ScheduleServiceImpl(val repository: ScheduleRepository): ScheduleService {
 
         return repository.findAll().toList()
 
+    }
+
+    override fun updateSchedule(schedule: Schedule): Schedule {
+        getSchedule(schedule.id)
+        return repository.save(schedule)
     }
 
 }

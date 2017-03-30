@@ -16,4 +16,6 @@ interface ScheduleService {
 
     fun getAllSchedules(): List<Schedule>
 
+    fun updateSchedule(schedule: Schedule): Schedule
+
 }

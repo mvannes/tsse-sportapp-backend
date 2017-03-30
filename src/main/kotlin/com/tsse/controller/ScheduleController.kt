@@ -47,19 +47,12 @@ class ScheduleController(private val service: ScheduleService) {
     }
 
     @PutMapping
-//    fun updateSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): ResponseEntity<ResponseBody<Unit>> {
-//
-////        val result: ResponseBody<Unit> = ResponseBody()
-////
-////        if (errors.hasErrors()) {
-////            result.msg = errors.allErrors.joinToString {",\t"}
-////            return ResponseEntity.badRequest().body(result)
-////        }
-//
-//        repository.save(schedule)
-//
-//        return ResponseEntity(HttpStatus.OK)
-//    }
+    fun updateSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): Schedule {
+
+        validateRequest(errors)
+
+        return service.updateSchedule(schedule)
+    }
 
     @DeleteMapping("/{id}")
     fun deleteSchedule(@PathVariable id: Long): ResponseEntity<Unit> {

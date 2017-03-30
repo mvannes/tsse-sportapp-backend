@@ -25,7 +25,7 @@ class ExerciseNotFoundException : ResourceNotFoundException {
 }
 
 class ScheduleNotFoundException: ResourceNotFoundException {
-    constructor(id: Long) : super("Exercise with id \'$id\' not found.")
+    constructor(id: Long) : super("Schedule with id \'$id\' not found.")
 }
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
