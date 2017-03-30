@@ -4,14 +4,11 @@ import com.tsse.ResponseBody
 import com.tsse.domain.Schedule
 import com.tsse.domain.invalidFormException
 import com.tsse.repository.ScheduleRepository
-import com.tsse.service.ScheduleServiceImpl
-import javassist.NotFoundException
+import com.tsse.service.ScheduleService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder
-import java.net.URI
 import javax.validation.Valid
 
 /**
@@ -22,7 +19,7 @@ import javax.validation.Valid
  */
 @RestController
 @RequestMapping("/api/schedule")
-class ScheduleController(val repository: ScheduleRepository, val service: ScheduleServiceImpl) {
+class ScheduleController(private val service: ScheduleService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -50,19 +47,19 @@ class ScheduleController(val repository: ScheduleRepository, val service: Schedu
     }
 
     @PutMapping
-    fun updateSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): ResponseEntity<ResponseBody<Unit>> {
-
-//        val result: ResponseBody<Unit> = ResponseBody()
+//    fun updateSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): ResponseEntity<ResponseBody<Unit>> {
 //
-//        if (errors.hasErrors()) {
-//            result.msg = errors.allErrors.joinToString {",\t"}
-//            return ResponseEntity.badRequest().body(result)
-//        }
-
-        repository.save(schedule)
-
-        return ResponseEntity(HttpStatus.OK)
-    }
+////        val result: ResponseBody<Unit> = ResponseBody()
+////
+////        if (errors.hasErrors()) {
+////            result.msg = errors.allErrors.joinToString {",\t"}
+////            return ResponseEntity.badRequest().body(result)
+////        }
+//
+//        repository.save(schedule)
+//
+//        return ResponseEntity(HttpStatus.OK)
+//    }
 
     @DeleteMapping("/{id}")
     fun deleteSchedule(@PathVariable id: Long): ResponseEntity<Unit> {

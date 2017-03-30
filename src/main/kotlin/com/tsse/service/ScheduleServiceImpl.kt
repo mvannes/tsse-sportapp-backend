@@ -13,15 +13,15 @@ import org.springframework.stereotype.Service
  * @version 1.0.0
  */
 @Service
-class ScheduleServiceImpl(val repository: ScheduleRepository) {
+class ScheduleServiceImpl(val repository: ScheduleRepository): ScheduleService {
 
-    fun saveSchedule(schedule: Schedule): Schedule {
+    override fun saveSchedule(schedule: Schedule): Schedule {
         return repository.save(schedule)
     }
 
-    fun getSchedule(id: Long): Schedule = repository.findOne(id) ?: throw ScheduleNotFoundException(id)
+    override fun getSchedule(id: Long): Schedule = repository.findOne(id) ?: throw ScheduleNotFoundException(id)
 
-    fun getAllSchedules(): List<Schedule> {
+    override fun getAllSchedules(): List<Schedule> {
 
         return repository.findAll().toList()
 

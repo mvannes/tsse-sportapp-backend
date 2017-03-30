@@ -25,13 +25,13 @@ class Schedule() {
     @Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long = 0
     @NotBlank(message = "Schedule name cannot be empty!") lateinit var name: String
     lateinit var description: String
-    @OneToMany(targetEntity = Workout::class) val workouts: MutableList<Workout>? = null
+    @OneToMany(targetEntity = Workout::class) var workouts: List<Workout> = ArrayList()
     @Range(min = 1, message = "Schedule needs at least one training per week!") var amountOfTrainingsPerWeek: Int = 1
 
-    constructor(name: String, description: String, workouts: List<Workout>, amountOfTrainingsPerWeek: Int) : this() {
+    constructor(name: String, description: String, workouts: ArrayList<Workout>, amountOfTrainingsPerWeek: Int) : this() {
         this.name = name
         this.description = description
-        this.workouts!!.addAll(workouts)
+        this.workouts = workouts
         this.amountOfTrainingsPerWeek = amountOfTrainingsPerWeek
 
     }
@@ -42,7 +42,6 @@ class Schedule() {
 data class Workout(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long, val name: String,
                    val description: String,
                    @ElementCollection(targetClass = String::class) val exercises: List<Exercise>)
-
 
 @Entity
 class Exercise() {

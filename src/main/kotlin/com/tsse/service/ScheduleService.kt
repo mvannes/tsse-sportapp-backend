@@ -1,5 +1,7 @@
 package com.tsse.service
 
+import com.tsse.domain.Schedule
+
 /**
  * Service used for schedules.
  *
@@ -8,10 +10,10 @@ package com.tsse.service
  */
 interface ScheduleService {
 
-    fun saveSchedule()
+    fun saveSchedule(schedule: Schedule): Schedule
 
-    fun getSchedule()
+    fun getSchedule(id: Long): Schedule
 
-    fun getAllSchedules()
+    fun getAllSchedules(): List<Schedule>
 
 }
