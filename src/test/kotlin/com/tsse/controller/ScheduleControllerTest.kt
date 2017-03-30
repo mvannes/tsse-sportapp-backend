@@ -6,6 +6,7 @@ import com.tsse.domain.ScheduleNotFoundException
 import com.tsse.service.ScheduleService
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.BDDMockito.given
@@ -16,7 +17,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import java.util.*
@@ -176,22 +177,23 @@ class ScheduleControllerTest {
 
     }
 
-//    @Test
-//    fun testUpdateScheduleNonExistingSchedule_returnsHttpStatusNotFound() {
-//
-//        val schedule = Schedule("Name", "Description", ArrayList(), 1)
-//
-//        given(service.updateSchedule(schedule)).willThrow(ScheduleNotFoundException::class.java)
-//
-//        mockMvc.perform(
-//                MockMvcRequestBuilders.put(uri)
-//                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-//                        .content(asJsonString(schedule)))
-//                .andExpect(status().isNotFound)
-//
-//    }
+    @Test
+    @Ignore
+    fun testUpdateScheduleNonExistingSchedule_returnsHttpStatusNotFound() {
 
+        val schedule = Schedule("Name", "Description", ArrayList(), 1)
 
+        given(service.updateSchedule(schedule)).willThrow(ScheduleNotFoundException::class.java)
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put(uri)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(schedule)))
+                .andExpect(status().isNotFound)
+
+    }
+
+    
 
 
     private fun asJsonString(obj: Any): String = ObjectMapper().writeValueAsString(obj)

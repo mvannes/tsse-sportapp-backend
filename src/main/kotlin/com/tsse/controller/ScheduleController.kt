@@ -47,6 +47,7 @@ class ScheduleController(private val service: ScheduleService) {
     }
 
     @PutMapping
+    @ResponseStatus(HttpStatus.OK)
     fun updateSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): Schedule {
 
         validateRequest(errors)
