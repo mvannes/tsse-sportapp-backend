@@ -144,7 +144,7 @@ class ExerciseControllerTests {
                 .andExpect(status().isNoContent)
 
         verify(exerciseService, times(1)).deleteExercise(1L)
-        Mockito.verifyNoMoreInteractions(exerciseService)
+        verifyNoMoreInteractions(exerciseService)
     }
 
     private fun asJsonString(obj: Any): String = ObjectMapper().writeValueAsString(obj)

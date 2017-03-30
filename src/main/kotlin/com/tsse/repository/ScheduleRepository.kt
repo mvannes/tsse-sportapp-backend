@@ -1,13 +1,14 @@
 package com.tsse.repository
 
-import com.tsse.model.Schedule
-import org.springframework.data.repository.CrudRepository
+import com.tsse.domain.Schedule
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
 /**
  * Repository for schedules.
  *
  * @author Fabian de Almeida Ramos
- *
  * @version 1.0.0
  */
-interface ScheduleRepository : CrudRepository<Schedule, Long>
+@Repository
+interface ScheduleRepository : JpaRepository<Schedule, Long>

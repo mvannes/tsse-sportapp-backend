@@ -19,7 +19,7 @@ data class User(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long
 
 @Entity
 data class Schedule(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long, val name: String,
-                    val description: String, @OneToMany(mappedBy = "schedule") val workouts: List<Workout>,
+                    val description: String, @OneToMany(targetEntity = Schedule::class) val workouts: List<Workout>,
                     val amountOfTrainingsPerWeek: Int)
 
 @Entity
