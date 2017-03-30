@@ -117,7 +117,6 @@ class ScheduleControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect { content().equals(schedule) }
 
-        verify(service, times(1)).getSchedule(id)
 
     }
 
@@ -130,6 +129,23 @@ class ScheduleControllerTest {
         mockMvc.perform(
                 get(uri + "{id}", id))
                 .andExpect(status().isNotFound)
+    }
+
+    @Test
+    fun testGetAllSchedules_returnsHttpStatusOk() {
+
+        val results: List<Schedule> = arrayListOf(Schedule("Name", "Description", ArrayList(), 0),
+                Schedule("Name2", "Description2", ArrayList(), 0))
+
+
+        given(service.getAllSchedules()).willReturn(results)
+
+        mockMvc.perform(
+                get(uri))
+                .andExpect(status().isOk)
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect { content().equals(results) }
+
     }
 
     
