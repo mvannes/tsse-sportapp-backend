@@ -10,6 +10,7 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.willDoNothing
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -193,8 +195,18 @@ class ScheduleControllerTest {
 
     }
 
-    
+    @Test
+    fun testDeleteSchedule_returnsHttpStatusOK() {
 
+        val id = 1L
+        
+        willDoNothing().given(service).deleteSchedule(id)
+
+        mockMvc.perform(
+                delete(uri + "{id}", id))
+                .andExpect (status().isOk)
+
+    }
 
     private fun asJsonString(obj: Any): String = ObjectMapper().writeValueAsString(obj)
 

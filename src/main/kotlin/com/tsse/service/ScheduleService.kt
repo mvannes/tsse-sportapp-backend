@@ -18,4 +18,6 @@ interface ScheduleService {
 
     fun updateSchedule(schedule: Schedule): Schedule
 
+    fun deleteSchedule(id: Long)
+
 }

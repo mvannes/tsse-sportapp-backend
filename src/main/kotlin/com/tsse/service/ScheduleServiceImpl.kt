@@ -14,21 +14,16 @@ import org.springframework.stereotype.Service
 @Service
 class ScheduleServiceImpl(val repository: ScheduleRepository) : ScheduleService {
 
-    override fun saveSchedule(schedule: Schedule): Schedule {
-        return repository.save(schedule)
-    }
+    override fun saveSchedule(schedule: Schedule) = repository.save(schedule)
 
     override fun getSchedule(id: Long): Schedule = repository.findOne(id) ?: throw ScheduleNotFoundException(id)
 
-    override fun getAllSchedules(): List<Schedule> {
-
-        return repository.findAll().toList()
-
-    }
+    override fun getAllSchedules() = repository.findAll().toList()
 
     override fun updateSchedule(schedule: Schedule): Schedule {
         getSchedule(schedule.id)
         return repository.save(schedule)
     }
 
+    override fun deleteSchedule(id: Long) = repository.delete(id)
 }

@@ -56,11 +56,8 @@ class ScheduleController(private val service: ScheduleService) {
     }
 
     @DeleteMapping("/{id}")
-    fun deleteSchedule(@PathVariable id: Long): ResponseEntity<Unit> {
-//        repository.delete(id)
-
-        return ResponseEntity(HttpStatus.OK)
-    }
+    @ResponseStatus(HttpStatus.OK)
+    fun deleteSchedule(@PathVariable id: Long) = service.deleteSchedule(id)
 
     private fun validateRequest(errors: Errors) {
         if (errors.hasErrors()) {
