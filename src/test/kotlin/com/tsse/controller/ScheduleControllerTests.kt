@@ -32,7 +32,7 @@ import java.util.*
  */
 
 @RunWith(SpringRunner::class)
-class ScheduleControllerTest {
+class ScheduleControllerTests {
 
     @Mock lateinit var service: ScheduleService
 
