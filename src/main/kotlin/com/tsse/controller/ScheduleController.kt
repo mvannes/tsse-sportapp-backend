@@ -3,7 +3,6 @@ package com.tsse.controller
 import com.tsse.ResponseBody
 import com.tsse.domain.Schedule
 import com.tsse.domain.invalidFormException
-import com.tsse.repository.ScheduleRepository
 import com.tsse.service.ScheduleService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

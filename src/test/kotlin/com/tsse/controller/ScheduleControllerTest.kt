@@ -199,7 +199,7 @@ class ScheduleControllerTest {
     fun testDeleteSchedule_returnsHttpStatusOK() {
 
         val id = 1L
-        
+
         willDoNothing().given(service).deleteSchedule(id)
 
         mockMvc.perform(
