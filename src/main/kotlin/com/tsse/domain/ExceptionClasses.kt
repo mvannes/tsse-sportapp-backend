@@ -25,3 +25,10 @@ class ExerciseNotFoundException : ResourceNotFoundException {
 }
 
 class DataInvalidException(errorMessages: List<String>) : RuntimeException(errorMessages.toString())
+
+class ScheduleNotFoundException: ResourceNotFoundException {
+    constructor(id: Long) : super("Schedule with id \'$id\' not found.")
+}
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+class invalidFormException(message: String) : RuntimeException("Object sent is not valid: $message")
