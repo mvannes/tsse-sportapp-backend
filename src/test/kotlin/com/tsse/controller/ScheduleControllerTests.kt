@@ -40,7 +40,7 @@ class ScheduleControllerTests {
 
     lateinit var mockMvc: MockMvc
 
-    val uri = "/api/schedule/"
+    val URI = "/api/schedule/"
 
     @Before
     fun setup() {
@@ -57,7 +57,7 @@ class ScheduleControllerTests {
 
         given(service.saveSchedule(schedule)).willReturn(schedule)
         mockMvc.perform(
-                MockMvcRequestBuilders.post(uri)
+                MockMvcRequestBuilders.post(URI)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(asJsonString(schedule)))
                 .andExpect(status().isCreated)
@@ -70,7 +70,7 @@ class ScheduleControllerTests {
         val schedule = Schedule("", "Description", ArrayList(), 1)
 
         mockMvc.perform(
-                MockMvcRequestBuilders.post(uri)
+                MockMvcRequestBuilders.post(URI)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(asJsonString(schedule)))
                 .andExpect(status().isBadRequest)
@@ -84,7 +84,7 @@ class ScheduleControllerTests {
 
         given(service.saveSchedule(schedule)).willReturn(schedule)
         mockMvc.perform(
-                MockMvcRequestBuilders.post(uri)
+                MockMvcRequestBuilders.post(URI)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(asJsonString(schedule)))
                 .andExpect(status().isCreated)
@@ -98,7 +98,7 @@ class ScheduleControllerTests {
 
         given(service.saveSchedule(schedule)).willReturn(schedule)
         mockMvc.perform(
-                MockMvcRequestBuilders.post(uri)
+                MockMvcRequestBuilders.post(URI)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(asJsonString(schedule)))
                 .andExpect(status().isBadRequest)
@@ -113,7 +113,7 @@ class ScheduleControllerTests {
         given(service.getSchedule(id)).willReturn(schedule)
 
         mockMvc.perform(
-                get(uri + "{id}", id))
+                get(URI + "{id}", id))
                 .andExpect(status().isOk)
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect { content().equals(schedule) }
@@ -128,7 +128,7 @@ class ScheduleControllerTests {
         given(service.getSchedule(id)).willThrow(ScheduleNotFoundException::class.java)
 
         mockMvc.perform(
-                get(uri + "{id}", id))
+                get(URI + "{id}", id))
                 .andExpect(status().isNotFound)
     }
 
@@ -142,7 +142,7 @@ class ScheduleControllerTests {
         given(service.getAllSchedules()).willReturn(results)
 
         mockMvc.perform(
-                get(uri))
+                get(URI))
                 .andExpect(status().isOk)
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect { content().equals(results) }
@@ -156,7 +156,7 @@ class ScheduleControllerTests {
         given(service.updateSchedule(schedule)).willReturn(schedule)
 
         mockMvc.perform(
-                MockMvcRequestBuilders.put(uri)
+                MockMvcRequestBuilders.put(URI)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(asJsonString(schedule)))
                 .andExpect(status().isOk)
@@ -171,7 +171,7 @@ class ScheduleControllerTests {
         val schedule = Schedule("", "Description", ArrayList(), 1)
 
         mockMvc.perform(
-                MockMvcRequestBuilders.put(uri)
+                MockMvcRequestBuilders.put(URI)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(asJsonString(schedule)))
                 .andExpect(status().isBadRequest)
@@ -180,7 +180,6 @@ class ScheduleControllerTests {
     }
 
     @Test
-    @Ignore
     fun testUpdateScheduleNonExistingSchedule_returnsHttpStatusNotFound() {
 
         val schedule = Schedule("Name", "Description", ArrayList(), 1)
@@ -188,7 +187,7 @@ class ScheduleControllerTests {
         given(service.updateSchedule(schedule)).willThrow(ScheduleNotFoundException::class.java)
 
         mockMvc.perform(
-                MockMvcRequestBuilders.put(uri)
+                MockMvcRequestBuilders.put(URI)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(schedule)))
                 .andExpect(status().isNotFound)
@@ -203,7 +202,7 @@ class ScheduleControllerTests {
         willDoNothing().given(service).deleteSchedule(id)
 
         mockMvc.perform(
-                delete(uri + "{id}", id))
+                delete(URI + "{id}", id))
                 .andExpect (status().isOk)
 
     }

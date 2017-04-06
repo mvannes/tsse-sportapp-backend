@@ -30,25 +30,14 @@ class ScheduleController(private val service: ScheduleService) {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun getSchedule(@PathVariable id: Long): Schedule {
-        return service.getSchedule(id)
-    }
+    fun getSchedule(@PathVariable id: Long): Schedule = service.getSchedule(id)
 
     @GetMapping
-    fun getSchedules(): ResponseEntity<ResponseBody<List<Schedule>>> {
-
-        val result: ResponseBody<List<Schedule>> = ResponseBody()
-
-        result.msg = "Schedule list found!"
-        result.response = service.getAllSchedules()
-
-        return ResponseEntity.ok(result)
-    }
+    fun getSchedules(): List<Schedule> = service.getAllSchedules()
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     fun updateSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): Schedule {
-
         validateRequest(errors)
 
         return service.updateSchedule(schedule)

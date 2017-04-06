@@ -32,7 +32,10 @@ class Schedule() {
         this.description = description
         this.workouts = workouts
         this.amountOfTrainingsPerWeek = amountOfTrainingsPerWeek
+    }
 
+    override fun equals(other: Any?): Boolean {
+        return name == (other as Schedule).name
     }
 
 }
