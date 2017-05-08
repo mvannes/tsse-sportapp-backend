@@ -29,7 +29,7 @@ class ScheduleServiceTests {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this::class)
+        MockitoAnnotations.initMocks(ScheduleServiceTests::class)
         service = ScheduleServiceImpl(repository)
     }
 
