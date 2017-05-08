@@ -1,5 +1,6 @@
 package com.tsse.domain.model
 
+import org.hibernate.validator.constraints.NotBlank
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.util.*
@@ -18,16 +19,26 @@ class User : UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", nullable = false, updatable = false)
-    private var id: Long = 0L
+    var id: Long = 0L
 
     @Column(name = "username", nullable = false, unique = true)
+    @NotBlank(message = "Username cannot be empty!")
     private lateinit var username: String
 
     @Column(name = "password", nullable = false)
+    @NotBlank(message = "Password cannot be empty!")
     private lateinit var password: String
 
     @Column(name = "enabled", nullable = false)
-    private var enabled: Boolean = false
+    var enabled: Boolean = false
+
+    constructor()
+
+    constructor(username: String, password: String, enabled: Boolean) {
+        this.username = username
+        this.password = password
+        this.enabled = enabled
+    }
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = ArrayList()
 
@@ -42,4 +53,8 @@ class User : UserDetails {
     override fun isAccountNonExpired(): Boolean = true
 
     override fun isAccountNonLocked(): Boolean = true
+
+    override fun equals(other: Any?): Boolean {
+        return username == (other as User).username
+    }
 }

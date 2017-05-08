@@ -16,7 +16,7 @@ import javax.validation.Valid
  * @version 1.0.0
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 class UserController(val service: UserService) {
 
     @PostMapping
@@ -40,12 +40,12 @@ class UserController(val service: UserService) {
     fun updateUser(@Valid @RequestBody user: User, errors: Errors): User {
         validateRequest(errors)
 
-        return service.saveUser(user)
+        return service.updateUser(user)
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteUser(id: Long) = service.deleteUser(id)
+    fun deleteUser(@PathVariable id: Long) = service.deleteUser(id)
 
     private fun validateRequest(errors: Errors) {
         if (errors.hasErrors()) {
