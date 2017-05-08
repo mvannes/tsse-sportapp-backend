@@ -203,7 +203,7 @@ class ScheduleControllerTests {
         mockMvc.perform(
                 delete(URI + "{id}", id))
                 .andExpect(status().isNoContent)
-
+                .andExpect (status().isNoContent)
     }
 
     private fun asJsonString(obj: Any): String = ObjectMapper().writeValueAsString(obj)
