@@ -24,20 +24,20 @@ class UserController {
 
     }
 
-    fun getUser(id: Long): User {
-
-    }
-
-    fun getAllUsers(): List<User> {
-
-    }
-
-    fun updateUser(user: User) {
-
-    }
-
-    fun deleteUser(id: Long) {
-
-    }
+//    fun getUser(id: Long): User {
+//
+//    }
+//
+//    fun getAllUsers(): List<User> {
+//
+//    }
+//
+//    fun updateUser(user: User) {
+//
+//    }
+//
+//    fun deleteUser(id: Long) {
+//
+//    }
 
 }
