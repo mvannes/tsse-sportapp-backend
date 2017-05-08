@@ -1,6 +1,5 @@
 package com.tsse.domain.model
 
-import com.tsse.domain.Exercise
 import javax.persistence.*
 
 /**
