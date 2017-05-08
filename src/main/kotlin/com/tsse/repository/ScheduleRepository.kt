@@ -1,6 +1,6 @@
 package com.tsse.repository
 
-import com.tsse.domain.Schedule
+import com.tsse.domain.model.Schedule
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

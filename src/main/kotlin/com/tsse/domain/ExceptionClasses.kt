@@ -1,5 +1,6 @@
 package com.tsse.domain
 
+import com.tsse.domain.model.Exercise
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
 

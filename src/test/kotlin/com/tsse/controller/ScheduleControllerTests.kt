@@ -1,12 +1,11 @@
 package com.tsse.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.tsse.domain.Schedule
 import com.tsse.domain.ScheduleNotFoundException
+import com.tsse.domain.model.Schedule
 import com.tsse.service.ScheduleService
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.BDDMockito.given
@@ -203,7 +202,7 @@ class ScheduleControllerTests {
 
         mockMvc.perform(
                 delete(URI + "{id}", id))
-                .andExpect (status().isNoContent)
+                .andExpect(status().isNoContent)
 
     }
 

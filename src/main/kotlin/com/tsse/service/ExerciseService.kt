@@ -1,7 +1,7 @@
 package com.tsse.service
 
-import com.tsse.domain.Category
-import com.tsse.domain.Exercise
+import com.tsse.domain.model.Category
+import com.tsse.domain.model.Exercise
 
 /**
  * Service interface for exercises.

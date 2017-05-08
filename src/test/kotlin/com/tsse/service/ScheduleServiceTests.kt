@@ -1,7 +1,7 @@
 package com.tsse.service
 
-import com.tsse.domain.Schedule
 import com.tsse.domain.ScheduleNotFoundException
+import com.tsse.domain.model.Schedule
 import com.tsse.repository.ScheduleRepository
 import org.junit.Before
 import org.junit.Test

@@ -1,6 +1,6 @@
 package com.tsse.repository
 
-import com.tsse.domain.Workout
+import com.tsse.domain.model.Workout
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

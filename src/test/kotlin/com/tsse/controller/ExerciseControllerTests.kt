@@ -1,8 +1,8 @@
 package com.tsse.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.tsse.domain.Exercise
 import com.tsse.domain.ExerciseNotFoundException
+import com.tsse.domain.model.Exercise
 import com.tsse.service.ExerciseService
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
