@@ -1,49 +1,51 @@
 package com.tsse.controller
 
-import com.tsse.domain.Schedule
 import com.tsse.domain.invalidFormException
-import com.tsse.service.ScheduleService
+import com.tsse.domain.model.User
+import com.tsse.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 /**
- * Controller used for REST operations related to schedules.
+ * Controller used for REST operations related to users.
  *
  * @author Fabian de Almeida Ramos
+ * @author Boyd Hogerheijde
  * @version 1.0.0
  */
 @RestController
-@RequestMapping("/api/schedule")
-class ScheduleController(private val service: ScheduleService) {
+@RequestMapping("/api/users")
+class UserController(val service: UserService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): Schedule {
+    fun createUser(@Valid @RequestBody user: User, errors: Errors): User {
         validateRequest(errors)
 
-        return service.saveSchedule(schedule)
+        return service.saveUser(user)
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun getSchedule(@PathVariable id: Long): Schedule = service.getSchedule(id)
+    fun getUser(@PathVariable id: Long) = service.getUser(id)
 
     @GetMapping
-    fun getSchedules(): List<Schedule> = service.getAllSchedules()
+    @ResponseStatus(HttpStatus.OK)
+    fun getAllUsers() = service.getAllUsers()
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    fun updateSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): Schedule {
+    fun updateUser(@Valid @RequestBody user: User, errors: Errors): User {
         validateRequest(errors)
 
-        return service.updateSchedule(schedule)
+        return service.updateUser(user)
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteSchedule(@PathVariable id: Long) = service.deleteSchedule(id)
+    fun deleteUser(@PathVariable id: Long) = service.deleteUser(id)
 
     private fun validateRequest(errors: Errors) {
         if (errors.hasErrors()) {
@@ -53,6 +55,5 @@ class ScheduleController(private val service: ScheduleService) {
 
         }
     }
-
 
 }

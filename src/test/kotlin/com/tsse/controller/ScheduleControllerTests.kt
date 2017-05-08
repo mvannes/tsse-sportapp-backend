@@ -44,7 +44,7 @@ class ScheduleControllerTests {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this::class)
+        MockitoAnnotations.initMocks(ScheduleControllerTests::class)
         mockMvc = MockMvcBuilders
                 .standaloneSetup(scheduleController)
                 .build()
@@ -195,7 +195,7 @@ class ScheduleControllerTests {
     }
 
     @Test
-    fun testDeleteSchedule_returnsHttpStatusOK() {
+    fun testDeleteSchedule_returnsHttpStatusNoContent() {
 
         val id = 1L
 
@@ -203,7 +203,7 @@ class ScheduleControllerTests {
 
         mockMvc.perform(
                 delete(URI + "{id}", id))
-                .andExpect (status().isOk)
+                .andExpect (status().isNoContent)
 
     }
 
