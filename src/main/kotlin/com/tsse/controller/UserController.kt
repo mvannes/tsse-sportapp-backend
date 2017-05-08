@@ -1,11 +1,12 @@
 package com.tsse.controller
 
+import com.tsse.domain.invalidFormException
 import com.tsse.domain.model.User
+import com.tsse.service.UserService
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.validation.Errors
+import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 /**
  *
@@ -16,28 +17,43 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController
 @RequestMapping("/users")
-class UserController {
+class UserController(val service: UserService) {
 
     @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    fun createUser(user: User) {
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createUser(@Valid @RequestBody user: User, errors: Errors): User {
+        validateRequest(errors)
 
+        return service.saveUser(user)
     }
 
-//    fun getUser(id: Long): User {
-//
-//    }
-//
-//    fun getAllUsers(): List<User> {
-//
-//    }
-//
-//    fun updateUser(user: User) {
-//
-//    }
-//
-//    fun deleteUser(id: Long) {
-//
-//    }
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    fun getUser(id: Long) = service.getUser(id)
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    fun getAllUsers() = service.getAllUsers()
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    fun updateUser(@Valid @RequestBody user: User, errors: Errors): User {
+        validateRequest(errors)
+
+        return service.saveUser(user)
+    }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteUser(id: Long) = service.deleteUser(id)
+
+    private fun validateRequest(errors: Errors) {
+        if (errors.hasErrors()) {
+
+            val errorMessages = errors.allErrors.map { it.defaultMessage }.toString()
+            throw invalidFormException(errorMessages)
+
+        }
+    }
 
 }
