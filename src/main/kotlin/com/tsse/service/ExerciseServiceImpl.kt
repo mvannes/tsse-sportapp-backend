@@ -1,9 +1,11 @@
 package com.tsse.service
 
-import com.tsse.domain.*
+import com.tsse.domain.ExerciseAlreadyExistsException
+import com.tsse.domain.ExerciseNotFoundException
+import com.tsse.domain.model.Category
+import com.tsse.domain.model.Exercise
 import com.tsse.repository.ExerciseRepository
 import org.springframework.stereotype.Service
-import org.springframework.validation.Errors
 
 /**
  * Service implementation for exercises.

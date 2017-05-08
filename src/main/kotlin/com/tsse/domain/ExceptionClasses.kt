@@ -1,5 +1,6 @@
 package com.tsse.domain
 
+import com.tsse.domain.model.Exercise
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
 
@@ -26,7 +27,11 @@ class ExerciseNotFoundException : ResourceNotFoundException {
 
 class DataInvalidException(errorMessages: List<String>) : RuntimeException(errorMessages.toString())
 
-class ScheduleNotFoundException: ResourceNotFoundException {
+class ScheduleNotFoundException : ResourceNotFoundException {
+    constructor(id: Long) : super("Schedule with id \'$id\' not found.")
+}
+
+class UserNotFoundException: ResourceNotFoundException {
     constructor(id: Long) : super("Schedule with id \'$id\' not found.")
 }
 

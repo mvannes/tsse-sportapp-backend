@@ -1,6 +1,7 @@
 package com.tsse.service
 
-import com.tsse.domain.Schedule
+import com.tsse.domain.model.Schedule
+
 
 /**
  * Service used for schedules.
