@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 /**
- *
+ * Controller used for REST operations related to users.
  *
  * @author Fabian de Almeida Ramos
  * @author Boyd Hogerheijde
