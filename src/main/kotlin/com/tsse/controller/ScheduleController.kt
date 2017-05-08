@@ -44,7 +44,7 @@ class ScheduleController(private val service: ScheduleService) {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteSchedule(@PathVariable id: Long) = service.deleteSchedule(id)
 
     private fun validateRequest(errors: Errors) {
