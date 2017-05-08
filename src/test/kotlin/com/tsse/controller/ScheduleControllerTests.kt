@@ -44,7 +44,7 @@ class ScheduleControllerTests {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this::class)
+        MockitoAnnotations.initMocks(ScheduleControllerTests::class)
         mockMvc = MockMvcBuilders
                 .standaloneSetup(scheduleController)
                 .build()

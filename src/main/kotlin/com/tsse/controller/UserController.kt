@@ -27,9 +27,9 @@ class UserController(val service: UserService) {
         return service.saveUser(user)
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun getUser(id: Long) = service.getUser(id)
+    fun getUser(@PathVariable id: Long) = service.getUser(id)
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
