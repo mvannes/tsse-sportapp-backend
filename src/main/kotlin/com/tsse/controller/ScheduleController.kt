@@ -1,6 +1,5 @@
 package com.tsse.controller
 
-import com.tsse.domain.invalidFormException
 import com.tsse.domain.model.Schedule
 import com.tsse.service.ScheduleService
 import org.springframework.http.HttpStatus

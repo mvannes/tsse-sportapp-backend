@@ -1,6 +1,5 @@
 package com.tsse.controller
 
-import com.tsse.domain.DataInvalidException
 import com.tsse.domain.model.Exercise
 import com.tsse.service.ExerciseService
 import org.springframework.http.HttpStatus

@@ -34,7 +34,3 @@ class ScheduleNotFoundException : ResourceNotFoundException {
 class UserNotFoundException: ResourceNotFoundException {
     constructor(id: Long) : super("Schedule with id \'$id\' not found.")
 }
-
-class UserNotFoundException: ResourceNotFoundException {
-    constructor(id: Long) : super("Schedule with id \'$id\' not found.")
-}
