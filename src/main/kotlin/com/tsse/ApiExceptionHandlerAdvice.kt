@@ -1,20 +1,19 @@
 package com.tsse
 
-import com.tsse.domain.ApiErrorResponse
-import com.tsse.domain.DataInvalidException
-import com.tsse.domain.ResourceAlreadyExistsException
-import com.tsse.domain.ResourceNotFoundException
+import com.tsse.domain.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.transaction.TransactionSystemException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import java.util.*
+import javax.validation.ConstraintViolationException
 
 /**
  * Global exception handler for handling exceptions thrown by rest controller methods.
@@ -34,20 +33,33 @@ class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
         return handleException(exception, request, HttpStatus.NOT_FOUND)
     }
 
-    @ExceptionHandler(ResourceAlreadyExistsException::class, DataInvalidException::class)
+    @ExceptionHandler(ResourceAlreadyExistsException::class)
     fun handleConflict(exception: RuntimeException, request: WebRequest): ResponseEntity<Any> {
         log.error("Conflicting exception caught: $exception")
 
         return handleException(exception, request, HttpStatus.CONFLICT)
     }
 
-    private fun handleException(exception: RuntimeException, request: WebRequest, httpStatus: HttpStatus): ResponseEntity<Any> {
+    @ExceptionHandler(ConstraintViolationException::class)
+    fun handleInvalidForm(exception: ConstraintViolationException, request: WebRequest): ResponseEntity<Any> {
+        val errorMessages = exception.constraintViolations.map { it.message }
+        return handleException(DataIntegrityException(errorMessages), request, HttpStatus.BAD_REQUEST)
+    }
+
+    //As we're not creating any transactions ourselves, these exceptions only occur because of ConstraintViolationExceptions.
+    @ExceptionHandler(TransactionSystemException::class)
+    fun handleTransactionSystemException(exception: TransactionSystemException, request: WebRequest): ResponseEntity<Any> {
+        val foundException = exception.rootCause as ConstraintViolationException
+        return handleInvalidForm(foundException, request)
+    }
+
+    private fun handleException(exception: Exception, request: WebRequest, httpStatus: HttpStatus): ResponseEntity<Any> {
         val errorResponse = createResponse(exception, request)
 
         return handleExceptionInternal(exception, errorResponse, HttpHeaders(), httpStatus, request)
     }
 
-    private fun createResponse(exception: RuntimeException, request: WebRequest): ApiErrorResponse {
+    private fun createResponse(exception: Exception, request: WebRequest): ApiErrorResponse {
         val errorMessage = exception.message
         val uri = request.getDescription(false) // Get requested uri, boolean value indicates whether or not the port is included.
         val errorResponse = ApiErrorResponse(uri, errorMessage, Date())

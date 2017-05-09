@@ -1,11 +1,8 @@
 package com.tsse.controller
 
-import com.tsse.ResponseBody
 import com.tsse.domain.Schedule
-import com.tsse.domain.invalidFormException
 import com.tsse.service.ScheduleService
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -22,11 +19,7 @@ class ScheduleController(private val service: ScheduleService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): Schedule {
-        validateRequest(errors)
-
-        return service.saveSchedule(schedule)
-    }
+    fun createSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors) = service.saveSchedule(schedule)
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -37,24 +30,11 @@ class ScheduleController(private val service: ScheduleService) {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    fun updateSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): Schedule {
-        validateRequest(errors)
-
-        return service.updateSchedule(schedule)
-    }
+    fun updateSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors) = service.updateSchedule(schedule)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteSchedule(@PathVariable id: Long) = service.deleteSchedule(id)
-
-    private fun validateRequest(errors: Errors) {
-        if (errors.hasErrors()) {
-
-            val errorMessages = errors.allErrors.map { it.defaultMessage }.toString()
-            throw invalidFormException(errorMessages)
-
-        }
-    }
 
 
 }

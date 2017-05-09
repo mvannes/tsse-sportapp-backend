@@ -1,6 +1,5 @@
 package com.tsse.controller
 
-import com.tsse.domain.DataInvalidException
 import com.tsse.domain.Exercise
 import com.tsse.service.ExerciseService
 import org.springframework.http.HttpStatus
@@ -31,11 +30,7 @@ class ExerciseController(private val exerciseService: ExerciseService) {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createExercise(@Valid @RequestBody exercise: Exercise, errors: Errors): Exercise {
-        validateRequest(errors)
-
-        return exerciseService.createExercise(exercise)
-    }
+    fun createExercise(@Valid @RequestBody exercise: Exercise, errors: Errors) = exerciseService.createExercise(exercise)
 
     /**
      * Controller method for getting all exercises from the database.
@@ -68,11 +63,7 @@ class ExerciseController(private val exerciseService: ExerciseService) {
      */
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    fun updateExercise(@Valid @RequestBody exercise: Exercise, errors: Errors): Exercise {
-        validateRequest(errors)
-
-        return exerciseService.updateExercise(exercise)
-    }
+    fun updateExercise(@Valid @RequestBody exercise: Exercise, errors: Errors) = exerciseService.updateExercise(exercise)
 
     /**
      * Deletes all exercises.
@@ -93,11 +84,5 @@ class ExerciseController(private val exerciseService: ExerciseService) {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteExercise(@PathVariable id: Long) = exerciseService.deleteExercise(id)
 
-    private fun validateRequest(errors: Errors) {
-        if (errors.hasErrors()) {
-            val errorMessages = errors.allErrors.map { it.defaultMessage }
-            throw DataInvalidException(errorMessages)
-        }
-    }
 
 }
