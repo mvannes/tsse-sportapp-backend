@@ -15,15 +15,15 @@ import javax.validation.Valid
  * @version 1.0.0
  */
 @RestController
-@RequestMapping("/api/schedule")
+@RequestMapping("/api/workout")
 class WorkoutController(private val service: WorkoutService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createWorkout(@Valid @RequestBody schedule: Workout, errors: Errors): Workout {
+    fun createWorkout(@Valid @RequestBody workout: Workout, errors: Errors): Workout {
         validateRequest(errors)
 
-        return service.saveWorkout(schedule)
+        return service.saveWorkout(workout)
     }
 
     @GetMapping("/{id}")
@@ -35,14 +35,14 @@ class WorkoutController(private val service: WorkoutService) {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    fun updateWorkout(@Valid @RequestBody schedule: Workout, errors: Errors): Workout {
+    fun updateWorkout(@Valid @RequestBody workout: Workout, errors: Errors): Workout {
         validateRequest(errors)
 
-        return service.updateWorkout(schedule)
+        return service.updateWorkout(workout)
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteWorkout(@PathVariable id: Long) = service.deleteWorkout(id)
 
     private fun validateRequest(errors: Errors) {

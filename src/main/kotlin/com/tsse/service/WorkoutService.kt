@@ -8,13 +8,13 @@ import com.tsse.domain.Workout
  */
 interface WorkoutService {
 
-    fun saveWorkout(schedule: Workout): Workout
+    fun saveWorkout(workout: Workout): Workout
 
     fun getWorkout(id: Long): Workout
 
     fun getAllWorkouts(): List<Workout>
 
-    fun updateWorkout(schedule: Workout): Workout
+    fun updateWorkout(workout: Workout): Workout
 
     fun deleteWorkout(id: Long)
 
