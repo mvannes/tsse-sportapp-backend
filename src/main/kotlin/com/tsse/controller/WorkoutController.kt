@@ -1,7 +1,7 @@
 package com.tsse.controller
 
-import com.tsse.domain.Workout
 import com.tsse.domain.invalidFormException
+import com.tsse.domain.model.Workout
 import com.tsse.service.WorkoutService
 import org.springframework.http.HttpStatus
 import org.springframework.validation.Errors
