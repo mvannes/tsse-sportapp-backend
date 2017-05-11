@@ -15,7 +15,7 @@ import javax.validation.Valid
  * @version 1.0.0
  */
 @RestController
-@RequestMapping("/api/workout")
+@RequestMapping("/api/workouts")
 class WorkoutController(private val service: WorkoutService) {
 
     @PostMapping
