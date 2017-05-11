@@ -1,7 +1,7 @@
 package com.tsse.service
 
 import com.tsse.domain.ExerciseNotFoundException
-import com.tsse.domain.Workout
+import com.tsse.domain.model.Workout
 import com.tsse.repository.WorkoutRepository
 import org.springframework.stereotype.Service
 
