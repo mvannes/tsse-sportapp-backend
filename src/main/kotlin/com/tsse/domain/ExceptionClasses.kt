@@ -19,8 +19,6 @@ abstract class ResourceNotFoundException(message: String) : RuntimeException(mes
 
 class ExerciseAlreadyExistsException(exercise: Exercise) : ResourceAlreadyExistsException("$exercise already exists.")
 
-class WorkoutAlreadyExistsException(workout: Workout) : ResourceAlreadyExistsException("$workout already exists.")
-
 class ExerciseNotFoundException : ResourceNotFoundException {
 
     constructor(id: Long) : super("Exercise with id \'$id\' not found.")

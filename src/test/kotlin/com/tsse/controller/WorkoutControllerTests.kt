@@ -36,7 +36,7 @@ class WorkoutControllerTests {
 
     lateinit var mockMvc: MockMvc
 
-    val URI = "/api/workouts"
+    val URI = "/api/workouts/"
 
     @Before
     fun setup() {
@@ -187,7 +187,6 @@ class WorkoutControllerTests {
         mockMvc.perform(
                 MockMvcRequestBuilders.delete(URI + "{id}", id))
                 .andExpect(status().isNoContent)
-                .andExpect (status().isNoContent)
     }
 
     private fun asJsonString(obj: Any): String = ObjectMapper().writeValueAsString(obj)

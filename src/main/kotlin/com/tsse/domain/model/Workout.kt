@@ -13,7 +13,7 @@ class Workout() {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long = 0
     @NotBlank(message = "Name cannot be empty.") lateinit var name: String
-    @NotBlank(message = "Description cannot be empty.") lateinit var description: String
+    lateinit var description: String
     @OneToMany(targetEntity = Workout::class) var exercises: List<Exercise> = ArrayList()
 
     constructor(name: String, description: String, exercises: ArrayList<Exercise>) : this() {

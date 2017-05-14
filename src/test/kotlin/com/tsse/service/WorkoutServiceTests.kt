@@ -75,21 +75,8 @@ class WorkoutServiceTests {
         assertNotNull(actual)
         assertEquals(expected, actual)
 
-        verify(workoutRepository, times(1)).findOne(expected.id)
         verify(workoutRepository, times(1)).save(expected)
         verifyNoMoreInteractions(workoutRepository)
-    }
-
-    @Test(expected = WorkoutAlreadyExistsException::class)
-    fun testCreateWorkout_ThrowsAlreadyExistsException() {
-        // Mock object.
-        val duplicateWorkout = Workout("Name", "Description.", ArrayList())
-
-        // Mockito expectations.
-        given(workoutRepository.findOne(duplicateWorkout.id)).willReturn(duplicateWorkout)
-
-        // Actual call will throw the expected exception.
-        workoutService.saveWorkout(duplicateWorkout)
     }
 
     @Test
