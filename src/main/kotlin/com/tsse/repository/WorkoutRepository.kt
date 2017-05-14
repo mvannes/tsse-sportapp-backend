@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository
  * @version 1.0.0
  */
 @Repository
-interface WorkoutRepository : JpaRepository<Workout, Long>
+interface WorkoutRepository : JpaRepository<Workout, Long> {
+    fun findById(id: Long): Workout?
+}

@@ -1,6 +1,6 @@
 package com.tsse.service
 
-import com.tsse.domain.ExerciseNotFoundException
+import com.tsse.domain.WorkoutNotFoundException
 import com.tsse.domain.model.Workout
 import com.tsse.repository.WorkoutRepository
 import org.springframework.stereotype.Service
@@ -15,7 +15,7 @@ class WorkoutServiceImpl(val repository: WorkoutRepository) : WorkoutService {
     override fun saveWorkout(workout: Workout) = repository.save(workout)
 
     // Temp Exception
-    override fun getWorkout(id: Long): Workout = repository.findOne(id) ?: throw ExerciseNotFoundException(id)
+    override fun getWorkout(id: Long): Workout = repository.findOne(id) ?: throw WorkoutNotFoundException(id)
 
     override fun getAllWorkouts() = repository.findAll().toList()
 
