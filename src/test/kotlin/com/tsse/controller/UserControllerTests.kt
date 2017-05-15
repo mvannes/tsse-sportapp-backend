@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import java.util.*
 
 /**
  *
@@ -47,7 +48,7 @@ class UserControllerTests {
     @Test
     fun testSaveUsers_returnsHttpStatusIsCreated() {
 
-        val user = User("Name", "Password", true)
+        val user = User("x@y.z", "Password", true, Date(), "displayName", "firstName", "lastName", "status")
 
         BDDMockito.given(service.saveUser(user)).willReturn(user)
         mockMvc.perform(
@@ -61,7 +62,8 @@ class UserControllerTests {
     @Test
     fun testSaveUserEmptyUsername_returnsHttpStatusIsBadRequest() {
 
-        val user = User("", "Password", true)
+        val user = User("", "Password", true, Date(), "displayname", "firstname", "lastname", "status")
+        println(user.getBirthdate())
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post(URI)
@@ -74,7 +76,7 @@ class UserControllerTests {
     @Test
     fun testSaveUserEmptyPassword_returnsHttpStatusIsBadRequest() {
 
-        val user = User("Name", "", true)
+        val user = User("x@y.z", "", true, Date(), "displayName", "firstName", "lastName", "status")
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post(URI)
@@ -87,7 +89,7 @@ class UserControllerTests {
     @Test
     fun testGetUserById_returnsHttpStatusOk() {
 
-        val user = User("Name", "Password", true)
+        val user = User("x@y.z", "Password", true, Date(), "displayName", "firstName", "lastName", "status")
         val id = 1L
         BDDMockito.given(service.getUser(id)).willReturn(user)
 
@@ -114,8 +116,8 @@ class UserControllerTests {
     @Test
     fun testGetAllUsers_returnsHttpStatusOk() {
 
-        val results = arrayListOf(User("Name1", "Password1", true),
-                User("Name2", "Password2", true))
+        val results = arrayListOf(User("x@y.z", "Password", true, Date(), "displayName", "firstName", "lastName", "status"),
+                User("x@y.z", "Password", true, Date(), "displayName", "firstName", "lastName", "status"))
 
 
         BDDMockito.given(service.getAllUsers()).willReturn(results)
@@ -130,7 +132,7 @@ class UserControllerTests {
 
     @Test
     fun testUpdateUser_returnsHttpStatusOk() {
-        val user = User("Name", "Password", true)
+        val user = User("x@y.z", "Password", true, Date(), "displayName", "firstName", "lastName", "status")
 
         BDDMockito.given(service.updateUser(user)).willReturn(user)
 
@@ -147,7 +149,7 @@ class UserControllerTests {
     @Test
     fun testUpdateUserInvalidForm_returnsHttpStatusBadRequest() {
 
-        val user = User("", "Password", true)
+        val user = User("x@y.z", "", true, Date(), "displayName", "firstName", "lastName", "status")
 
         mockMvc.perform(
                 MockMvcRequestBuilders.put(URI)
@@ -159,9 +161,9 @@ class UserControllerTests {
     }
 
     @Test
-    fun testUpdateUserNonExistingSchedule_returnsHttpStatusNotFound() {
+    fun testUpdateUserNonExistingUser_returnsHttpStatusNotFound() {
 
-        val user = User("Name", "Password", true)
+        val user = User("x@y.z", "Password", true, Date(), "displayName", "firstName", "lastName", "status")
 
         BDDMockito.given(service.updateUser(user)).willThrow(UserNotFoundException::class.java)
 
