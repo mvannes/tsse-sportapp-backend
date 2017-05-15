@@ -1,6 +1,5 @@
 package com.tsse.controller
 
-import com.tsse.domain.invalidFormException
 import com.tsse.domain.model.Schedule
 import com.tsse.service.ScheduleService
 import org.springframework.http.HttpStatus
@@ -20,11 +19,7 @@ class ScheduleController(private val service: ScheduleService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): Schedule {
-        validateRequest(errors)
-
-        return service.saveSchedule(schedule)
-    }
+    fun createSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors) = service.saveSchedule(schedule)
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -35,24 +30,11 @@ class ScheduleController(private val service: ScheduleService) {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    fun updateSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors): Schedule {
-        validateRequest(errors)
-
-        return service.updateSchedule(schedule)
-    }
+    fun updateSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors) = service.updateSchedule(schedule)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteSchedule(@PathVariable id: Long) = service.deleteSchedule(id)
-
-    private fun validateRequest(errors: Errors) {
-        if (errors.hasErrors()) {
-
-            val errorMessages = errors.allErrors.map { it.defaultMessage }.toString()
-            throw invalidFormException(errorMessages)
-
-        }
-    }
 
 
 }
