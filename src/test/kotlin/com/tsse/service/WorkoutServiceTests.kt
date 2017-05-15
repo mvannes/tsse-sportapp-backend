@@ -19,7 +19,7 @@ import java.util.ArrayList
  * Unit tests for WorkoutService.
  *
  * @author Floris van Lent
- * @version 1.0.0
+ * @version 1.0.1
  */
 @RunWith(SpringRunner::class)
 class WorkoutServiceTests {
@@ -110,19 +110,6 @@ class WorkoutServiceTests {
         // Actual call will throw the expected exception.
         workoutService.getWorkout(id)
     }
-
-//    @Test
-//    fun testDeleteAllWorkouts() {
-//        // Mockito expectations, Unit function will return nothing when called.
-//        willDoNothing().given(workoutRepository).deleteAll()
-//
-//        // Actual function call.
-//        workoutService.deleteWorkout()
-//
-//        // Assertions.
-//        verify(workoutRepository, times(1)).deleteAll()
-//        verifyNoMoreInteractions(workoutRepository)
-//    }
 
     @Test
     fun testDeleteWorkoutById() {

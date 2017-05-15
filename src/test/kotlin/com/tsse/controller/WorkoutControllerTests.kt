@@ -25,7 +25,7 @@ import java.util.ArrayList
  * MockMVC and Mockito based integration tests.
  *
  * @author Floris van Lent
- * @version 1.0.0
+ * @version 1.0.1
  */
 @RunWith(SpringRunner::class)
 class WorkoutControllerTests {
@@ -62,7 +62,7 @@ class WorkoutControllerTests {
 
 
     @Test
-    fun testSaveWorkoutEmptyName_returnsHttpStatusIsBadRequest() {
+    fun testSaveWorkoutEmptyName_returnsHttpStatusBadRequest() {
 
         val workout = Workout("", "Description", ArrayList())
 

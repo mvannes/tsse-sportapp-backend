@@ -12,7 +12,7 @@ import javax.validation.Valid
  * Controller used for REST operations related to Workouts.
  *
  * @author Floris van Lent
- * @version 1.0.0
+ * @version 1.0.1
  */
 @RestController
 @RequestMapping("/api/workouts")
@@ -47,12 +47,8 @@ class WorkoutController(private val service: WorkoutService) {
 
     private fun validateRequest(errors: Errors) {
         if (errors.hasErrors()) {
-
             val errorMessages = errors.allErrors.map { it.defaultMessage }.toString()
             throw invalidFormException(errorMessages)
-
         }
     }
-
-
 }
