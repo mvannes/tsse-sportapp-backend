@@ -1,6 +1,7 @@
 package com.tsse.domain
 
 import com.tsse.domain.model.Exercise
+import com.tsse.domain.model.Workout
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
 
@@ -32,7 +33,11 @@ class ScheduleNotFoundException : ResourceNotFoundException {
 }
 
 class UserNotFoundException: ResourceNotFoundException {
-    constructor(id: Long) : super("Schedule with id \'$id\' not found.")
+    constructor(id: Long) : super("User with id \'$id\' not found.")
+}
+
+class WorkoutNotFoundException : ResourceNotFoundException {
+    constructor(id: Long) : super("Workout with id \'$id\' not found.")
 }
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
