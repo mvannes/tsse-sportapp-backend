@@ -46,6 +46,7 @@ class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
     @ExceptionHandler(ConstraintViolationException::class)
     fun handleInvalidForm(exception: ConstraintViolationException, request: WebRequest): ResponseEntity<Any> {
         val errorMessages = exception.constraintViolations.map { it.message }
+
         return handleException(DataIntegrityException(errorMessages), request, HttpStatus.BAD_REQUEST)
     }
 
@@ -53,6 +54,7 @@ class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
     @ExceptionHandler(TransactionSystemException::class)
     fun handleTransactionSystemException(exception: TransactionSystemException, request: WebRequest): ResponseEntity<Any> {
         val foundException = exception.rootCause as ConstraintViolationException
+
         return handleInvalidForm(foundException, request)
     }
 
