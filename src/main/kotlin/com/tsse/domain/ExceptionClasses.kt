@@ -1,6 +1,7 @@
 package com.tsse.domain
 
 import com.tsse.domain.model.Exercise
+import com.tsse.domain.model.User
 import com.tsse.domain.model.Workout
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -18,6 +19,8 @@ abstract class ResourceAlreadyExistsException(message: String) : RuntimeExceptio
 abstract class ResourceNotFoundException(message: String) : RuntimeException(message)
 
 class ExerciseAlreadyExistsException(exercise: Exercise) : ResourceAlreadyExistsException("$exercise already exists.")
+
+class UserAlreadyExistsException(user: User): ResourceAlreadyExistsException("$user already exists.")
 
 class ExerciseNotFoundException : ResourceNotFoundException {
 
