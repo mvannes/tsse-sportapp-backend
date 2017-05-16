@@ -11,4 +11,7 @@ import org.springframework.stereotype.Repository
  * @version 1.0.0
  */
 @Repository
-interface UserRepository : JpaRepository<User, Long>
+interface UserRepository : JpaRepository<User, Long> {
+
+    fun findByUsername(username: String): User?
+}

@@ -29,14 +29,19 @@ class ExerciseNotFoundException : ResourceNotFoundException {
 class DataIntegrityException(errorMessages: List<String>) : RuntimeException(errorMessages.toString())
 
 class ScheduleNotFoundException : ResourceNotFoundException {
+
     constructor(id: Long) : super("Schedule with id \'$id\' not found.")
 }
 
 class UserNotFoundException: ResourceNotFoundException {
+
     constructor(id: Long) : super("User with id \'$id\' not found.")
+
+    constructor(username: String) : super("User with username \'$username\' not found.")
 }
 
 class WorkoutNotFoundException : ResourceNotFoundException {
+
     constructor(id: Long) : super("Workout with id \'$id\' not found.")
 }
 

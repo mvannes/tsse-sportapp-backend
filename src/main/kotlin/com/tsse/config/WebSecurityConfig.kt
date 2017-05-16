@@ -6,18 +6,25 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.web.AuthenticationEntryPoint
 
 /**
- * Created by boydhogerheijde on 08/05/2017.
+ * Created by boydhogerheijde on 16/05/2017.
  */
 @Configuration
 @EnableWebSecurity
 class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
+    @Autowired
+    lateinit var authEntryPoint: AuthenticationEntryPoint
+
     override fun configure(http: HttpSecurity?) {
         http?.let {
             http.csrf().disable()
-            http.authorizeRequests().antMatchers("/**").permitAll()
+            http.authorizeRequests()
+                    .anyRequest().authenticated()
+                    .and().httpBasic()
+                    .authenticationEntryPoint(authEntryPoint)
         }
     }
 
