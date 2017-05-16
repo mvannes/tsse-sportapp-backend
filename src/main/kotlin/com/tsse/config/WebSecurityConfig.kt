@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -24,18 +23,17 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity?) {
         http?.let {
-            http.csrf().disable()
-            http.authorizeRequests()
-                    .anyRequest().authenticated()
+            http
+                    .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/api/users").permitAll()
-                    .and().httpBasic()
-                    .authenticationEntryPoint(authEntryPoint)
+                    .antMatchers("/api/users").hasAuthority("ADMIN")
+                    .antMatchers(HttpMethod.DELETE).hasAuthority("ADMIN")
+                    .anyRequest().authenticated()
+                    .and()
+                    .httpBasic().authenticationEntryPoint(authEntryPoint)
+                    .and()
+                    .csrf().disable()
         }
-    }
-
-    @Autowired
-    fun configureGlobal(auth: AuthenticationManagerBuilder) {
-        auth.inMemoryAuthentication().withUser("tsse").password("sport").roles("USER")
     }
 
     @Bean

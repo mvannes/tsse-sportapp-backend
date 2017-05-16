@@ -1,6 +1,6 @@
 package com.tsse.domain.model
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.hibernate.validator.constraints.Email
 import org.hibernate.validator.constraints.NotBlank
 import org.springframework.security.core.authority.AuthorityUtils
@@ -38,29 +38,26 @@ class User() : UserDetails {
 
     @Column(name = "birthdate", nullable = false)
     @NotNull(message = "Birthdate cannot be empty!")
-    private lateinit var birthdate: Date
+    lateinit var birthdate: Date
 
     @Column(name = "displayName", nullable = false)
-    @JsonProperty("displayName")
     @NotBlank(message = "Display name cannot be empty!")
-    private lateinit var displayName: String
+    lateinit var displayName: String
 
     @Column(name = "firstName", nullable = false)
-    @JsonProperty("firstName")
     @NotBlank(message = "First name cannot be empty!")
-    private lateinit var firstName: String
+    lateinit var firstName: String
 
     @Column(name = "lastName", nullable = false)
-    @JsonProperty("lastName")
     @NotBlank(message = "Last name cannot be empty!")
-    private lateinit var lastName: String
+    lateinit var lastName: String
 
     @Column(name = "status")
-    private var status: String = ""
+    var status: String = ""
 
     @Column(name = "role", nullable = false, updatable = true)
     @NotBlank(message = "Role cannot be empty!")
-    private lateinit var role: String
+    lateinit var role: String
 
     constructor(username: String, password: String, enabled: Boolean,
                 birthdate: Date, displayName: String, firstName: String,
@@ -86,19 +83,9 @@ class User() : UserDetails {
 
     override fun getPassword(): String = password
 
-    fun setPassword(password: String): Unit {
+    fun setPassword(password: String) {
         this.password = password
     }
-
-    fun getBirthdate(): Date = birthdate
-
-    fun getDisplayname(): String = displayName
-
-    fun getFirstName(): String = firstName
-
-    fun getLastName(): String = lastName
-
-    fun getStatus(): String = status
 
     override fun isAccountNonExpired(): Boolean = true
 
