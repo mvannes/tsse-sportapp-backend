@@ -3,7 +3,6 @@ package com.tsse.domain.model
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.hibernate.validator.constraints.Email
 import org.hibernate.validator.constraints.NotBlank
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.UserDetails
 import java.util.*
@@ -59,9 +58,13 @@ class User() : UserDetails {
     @Column(name = "status")
     private var status: String = ""
 
+    @Column(name = "role", nullable = false, updatable = true)
+    @NotBlank(message = "Role cannot be empty!")
+    private lateinit var role: String
+
     constructor(username: String, password: String, enabled: Boolean,
                 birthdate: Date, displayName: String, firstName: String,
-                lastName: String, status: String) : this() {
+                lastName: String, status: String, role: String) : this() {
         this.username = username
         this.password = password
         this.enabled = enabled
@@ -70,9 +73,10 @@ class User() : UserDetails {
         this.firstName = firstName
         this.lastName = lastName
         this.status = status
+        this.role = role
     }
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> = AuthorityUtils.createAuthorityList("USER")
+    override fun getAuthorities() = AuthorityUtils.createAuthorityList(role)
 
     override fun isEnabled(): Boolean = enabled
 
@@ -99,7 +103,7 @@ class User() : UserDetails {
     override fun isAccountNonExpired(): Boolean = true
 
     override fun isAccountNonLocked(): Boolean = true
-    
+
     override fun equals(other: Any?): Boolean {
         return username == (other as User).username
     }
