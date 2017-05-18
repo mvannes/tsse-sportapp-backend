@@ -15,6 +15,7 @@ import javax.validation.Valid
  * @version 1.0.0
  */
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/users")
 class UserController(val service: UserService) {
 

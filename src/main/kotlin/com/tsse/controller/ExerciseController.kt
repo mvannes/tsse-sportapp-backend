@@ -17,6 +17,7 @@ import javax.validation.Valid
  * @version 1.1.0
  */
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/exercises")
 class ExerciseController(private val exerciseService: ExerciseService) {
 

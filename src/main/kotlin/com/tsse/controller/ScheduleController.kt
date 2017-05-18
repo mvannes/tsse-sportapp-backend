@@ -14,6 +14,7 @@ import javax.validation.Valid
  * @version 1.0.0
  */
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/schedule")
 class ScheduleController(private val service: ScheduleService) {
 
