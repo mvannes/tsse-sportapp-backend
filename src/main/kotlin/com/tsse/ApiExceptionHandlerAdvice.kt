@@ -6,6 +6,7 @@ import com.tsse.domain.ResourceAlreadyExistsException
 import com.tsse.domain.ResourceNotFoundException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -48,6 +49,13 @@ class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
         val errorMessages = exception.constraintViolations.map { it.message }
 
         return handleException(DataIntegrityException(errorMessages), request, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException::class)
+    fun handleDataIntegrityException(exception: DataIntegrityViolationException, request: WebRequest): ResponseEntity<Any> {
+        log.error("Data integrity exception caught: $exception")
+
+        return handleException(exception, request, HttpStatus.BAD_REQUEST)
     }
 
     //As we're not creating any transactions ourselves, these exceptions only occur because of ConstraintViolationExceptions.

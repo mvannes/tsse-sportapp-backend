@@ -1,6 +1,9 @@
 package com.tsse.service
 
 import com.tsse.domain.model.User
+import com.tsse.repository.UserRepository
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.stereotype.Service
 
 /**
  *
@@ -8,16 +11,22 @@ import com.tsse.domain.model.User
  * @author Fabian de Almeida Ramos
  * @version 1.0.0
  */
-interface UserService {
+@Service
+class UserService(val repository: UserRepository, val encoder: PasswordEncoder) : AbstractService<User>() {
 
-    fun saveUser(user: User): User
+    override fun repository() = repository
 
-    fun getUser(id: Long): User
+    override fun create(resource: User): User {
+        resource.password = encoder.encode(resource.password)
 
-    fun getAllUsers(): List<User>
+        return super.create(resource)
+    }
 
-    fun updateUser(user: User): User
+    override fun update(resource: User, id: Long) {
+        findOne(id)
 
-    fun deleteUser(id: Long)
+        resource.password = encoder.encode(resource.password)
 
+        super.update(resource, id)
+    }
 }

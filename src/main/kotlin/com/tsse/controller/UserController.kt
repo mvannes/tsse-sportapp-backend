@@ -21,22 +21,22 @@ class UserController(val service: UserService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createUser(@Valid @RequestBody user: User, errors: Errors) = service.saveUser(user)
+    fun createUser(@Valid @RequestBody user: User, errors: Errors) = service.create(user)
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun getUser(@PathVariable id: Long) = service.getUser(id)
+    fun getUser(@PathVariable id: Long) = service.findOne(id)
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun getAllUsers() = service.getAllUsers()
+    fun getAllUsers() = service.findAll()
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateUser(@Valid @RequestBody user: User, errors: Errors) = service.updateUser(user)
+    fun updateUser(@Valid @RequestBody user: User, @PathVariable id: Long, errors: Errors) = service.update(user, id)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteUser(@PathVariable id: Long) = service.deleteUser(id)
+    fun deleteUser(@PathVariable id: Long) = service.delete(id)
 
 }

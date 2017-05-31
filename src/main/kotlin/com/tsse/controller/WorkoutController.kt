@@ -14,26 +14,25 @@ import javax.validation.Valid
  * @version 1.0.1
  */
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/workouts")
 class WorkoutController(private val service: WorkoutService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createWorkout(@Valid @RequestBody workout: Workout, errors: Errors) = service.saveWorkout(workout)
+    fun createWorkout(@Valid @RequestBody workout: Workout, errors: Errors) = service.create(workout)
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun getWorkout(@PathVariable id: Long): Workout = service.getWorkout(id)
+    fun getWorkout(@PathVariable id: Long): Workout = service.findOne(id)
 
     @GetMapping
-    fun getWorkouts(): List<Workout> = service.getAllWorkouts()
+    fun getWorkouts(): List<Workout> = service.findAll()
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateWorkout(@Valid @RequestBody workout: Workout, errors: Errors) = service.updateWorkout(workout)
+    fun updateWorkout(@Valid @RequestBody workout: Workout, @RequestParam id: Long, errors: Errors) = service.update(workout, id)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteWorkout(@PathVariable id: Long) = service.deleteWorkout(id)
+    fun deleteWorkout(@PathVariable id: Long) = service.delete(id)
 }

@@ -1,7 +1,8 @@
 package com.tsse.service
 
 import com.tsse.domain.model.Schedule
-
+import com.tsse.repository.ScheduleRepository
+import org.springframework.stereotype.Service
 
 /**
  * Service used for schedules.
@@ -9,16 +10,8 @@ import com.tsse.domain.model.Schedule
  * @author Fabian de Almeida Ramos
  * @version 1.0.0
  */
-interface ScheduleService {
+@Service
+class ScheduleService(val repository: ScheduleRepository) : AbstractService<Schedule>() {
 
-    fun saveSchedule(schedule: Schedule): Schedule
-
-    fun getSchedule(id: Long): Schedule
-
-    fun getAllSchedules(): List<Schedule>
-
-    fun updateSchedule(schedule: Schedule): Schedule
-
-    fun deleteSchedule(id: Long)
-
+    override fun repository() = repository
 }

@@ -1,7 +1,7 @@
 package com.tsse.domain.model
 
 import org.hibernate.validator.constraints.NotBlank
-import java.util.ArrayList
+import java.util.*
 import javax.persistence.*
 
 /**

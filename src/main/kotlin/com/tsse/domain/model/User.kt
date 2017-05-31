@@ -2,8 +2,6 @@ package com.tsse.domain.model
 
 import org.hibernate.validator.constraints.Email
 import org.hibernate.validator.constraints.NotBlank
-import org.springframework.security.core.authority.AuthorityUtils
-import org.springframework.security.core.userdetails.UserDetails
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotNull
@@ -16,7 +14,7 @@ import javax.validation.constraints.NotNull
  */
 @Entity
 @Table(name = "users")
-class User() : UserDetails {
+class User() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,11 +24,11 @@ class User() : UserDetails {
     @Column(name = "username", nullable = false, unique = true)
     @NotBlank(message = "Username cannot be empty!")
     @Email(message = "Invalid email entered.")
-    private lateinit var username: String
+    lateinit var username: String
 
     @Column(name = "password", nullable = false)
     @NotBlank(message = "Password cannot be empty!")
-    private lateinit var password: String
+    lateinit var password: String
 
     @Column(name = "enabled", nullable = false)
     var enabled: Boolean = false
@@ -71,24 +69,6 @@ class User() : UserDetails {
         this.status = status
         this.role = role
     }
-
-    override fun getAuthorities() = AuthorityUtils.createAuthorityList(role)
-
-    override fun isEnabled(): Boolean = enabled
-
-    override fun getUsername(): String = username
-
-    override fun isCredentialsNonExpired(): Boolean = true
-
-    override fun getPassword(): String = password
-
-    fun setPassword(password: String) {
-        this.password = password
-    }
-
-    override fun isAccountNonExpired(): Boolean = true
-
-    override fun isAccountNonLocked(): Boolean = true
 
     override fun equals(other: Any?): Boolean {
         return username == (other as User).username

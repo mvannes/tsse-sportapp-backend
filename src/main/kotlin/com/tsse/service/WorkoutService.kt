@@ -1,21 +1,15 @@
 package com.tsse.service
 
 import com.tsse.domain.model.Workout
+import com.tsse.repository.WorkoutRepository
+import org.springframework.stereotype.Service
 
 /**
  * @author Floris van Lent
- * @version 1.0.0
+ * @version 1.0.1
  */
-interface WorkoutService {
+@Service
+class WorkoutService(val repository: WorkoutRepository) : AbstractService<Workout>() {
 
-    fun saveWorkout(workout: Workout): Workout
-
-    fun getWorkout(id: Long): Workout
-
-    fun getAllWorkouts(): List<Workout>
-
-    fun updateWorkout(workout: Workout): Workout
-
-    fun deleteWorkout(id: Long)
-
+    override fun repository() = repository
 }

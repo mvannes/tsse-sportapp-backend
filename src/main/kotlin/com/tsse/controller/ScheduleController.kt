@@ -19,22 +19,22 @@ class ScheduleController(private val service: ScheduleService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors) = service.saveSchedule(schedule)
+    fun createSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors) = service.create(schedule)
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun getSchedule(@PathVariable id: Long): Schedule = service.getSchedule(id)
+    fun getSchedule(@PathVariable id: Long): Schedule = service.findOne(id)
 
     @GetMapping
-    fun getSchedules(): List<Schedule> = service.getAllSchedules()
+    fun getSchedules(): List<Schedule> = service.findAll()
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateSchedule(@Valid @RequestBody schedule: Schedule, errors: Errors) = service.updateSchedule(schedule)
+    fun updateSchedule(@Valid @RequestBody schedule: Schedule, @PathVariable id: Long, errors: Errors) = service.update(schedule, id)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteSchedule(@PathVariable id: Long) = service.deleteSchedule(id)
+    fun deleteSchedule(@PathVariable id: Long) = service.delete(id)
 
 
 }

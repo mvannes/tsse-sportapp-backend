@@ -31,7 +31,7 @@ class ExerciseController(private val exerciseService: ExerciseService) {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createExercise(@Valid @RequestBody exercise: Exercise, errors: Errors) = exerciseService.createExercise(exercise)
+    fun createExercise(@Valid @RequestBody exercise: Exercise, errors: Errors) = exerciseService.create(exercise)
 
     /**
      * Controller method for getting all exercises from the database.
@@ -40,7 +40,7 @@ class ExerciseController(private val exerciseService: ExerciseService) {
      */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun getAllExercises(): List<Exercise> = exerciseService.getAllExercises()
+    fun getAllExercises(): List<Exercise> = exerciseService.findAll()
 
     /**
      * Controller method for getting a particular exercise via its identifier.
@@ -52,7 +52,7 @@ class ExerciseController(private val exerciseService: ExerciseService) {
      */
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun getExerciseById(@PathVariable id: Long): Exercise = exerciseService.getExerciseById(id)
+    fun getExerciseById(@PathVariable id: Long): Exercise = exerciseService.findOne(id)
 
     /**
      * Controller method used to update an existing exercise object.
@@ -62,9 +62,9 @@ class ExerciseController(private val exerciseService: ExerciseService) {
      *
      * @return The updated exercise.
      */
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateExercise(@Valid @RequestBody exercise: Exercise, errors: Errors) = exerciseService.updateExercise(exercise)
+    fun updateExercise(@Valid @RequestBody exercise: Exercise, @PathVariable id: Long, errors: Errors) = exerciseService.update(exercise, id)
 
     /**
      * Deletes all exercises.
@@ -74,7 +74,7 @@ class ExerciseController(private val exerciseService: ExerciseService) {
      */
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteAllExercises() = exerciseService.deleteAllExercises()
+    fun deleteAllExercises() = exerciseService.deleteAll()
 
     /**
      * Deletes a particular exercise.
@@ -83,7 +83,5 @@ class ExerciseController(private val exerciseService: ExerciseService) {
      */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteExercise(@PathVariable id: Long) = exerciseService.deleteExercise(id)
-
-
+    fun deleteExercise(@PathVariable id: Long) = exerciseService.delete(id)
 }
