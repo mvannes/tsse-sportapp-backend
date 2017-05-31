@@ -14,32 +14,32 @@ import org.springframework.stereotype.Service
  * @version 1.0.0
  */
 @Service
-class ExerciseServiceImpl(private val exerciseRepository: ExerciseRepository) : ExerciseService {
+class ExerciseServiceImpl(private val repository: ExerciseRepository) : ExerciseService {
 
     override fun createExercise(exercise: Exercise): Exercise {
-        if (exerciseRepository.findByName(exercise.name) != null) {
+        if (repository.findByName(exercise.name) != null) {
             throw ExerciseAlreadyExistsException(exercise)
         }
 
-        return exerciseRepository.save(exercise)
+        return repository.save(exercise)
     }
 
-    override fun getAllExercises(): List<Exercise> = exerciseRepository.findAll()
+    override fun getAllExercises(): List<Exercise> = repository.findAll()
 
-    override fun getExercisesByCategory(category: Category): List<Exercise> = exerciseRepository.findByCategory(category)
+    override fun getExercisesByCategory(category: Category): List<Exercise> = repository.findByCategory(category)
 
-    override fun getExerciseById(id: Long): Exercise = exerciseRepository.findOne(id) ?: throw ExerciseNotFoundException(id)
+    override fun getExerciseById(id: Long): Exercise = repository.findOne(id) ?: throw ExerciseNotFoundException(id)
 
-    override fun getExerciseByName(name: String): Exercise = exerciseRepository.findByName(name) ?: throw ExerciseNotFoundException(name)
+    override fun getExerciseByName(name: String): Exercise = repository.findByName(name) ?: throw ExerciseNotFoundException(name)
 
     override fun updateExercise(exercise: Exercise): Exercise {
         getExerciseById(exercise.id)
 
-        return exerciseRepository.save(exercise)
+        return repository.save(exercise)
     }
 
-    override fun deleteAllExercises() = exerciseRepository.deleteAll()
+    override fun deleteAllExercises() = repository.deleteAll()
 
-    override fun deleteExercise(id: Long) = exerciseRepository.delete(id)
+    override fun deleteExercise(id: Long) = repository.delete(id)
 
 }
