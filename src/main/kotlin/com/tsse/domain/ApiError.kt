@@ -9,4 +9,4 @@ import java.util.*
  * @author Boyd Hogerheijde
  * @version 1.0.0
  */
-data class ApiErrorResponse(val uri: String?, val message: String?, val timeStamp: Date)
+data class ApiError(val uri: String?, val message: String?, val timeStamp: Date)

@@ -1,6 +1,6 @@
 package com.tsse
 
-import com.tsse.domain.ApiErrorResponse
+import com.tsse.domain.ApiError
 import com.tsse.domain.DataIntegrityException
 import com.tsse.domain.ResourceAlreadyExistsException
 import com.tsse.domain.ResourceNotFoundException
@@ -72,10 +72,10 @@ class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
         return handleExceptionInternal(exception, errorResponse, HttpHeaders(), httpStatus, request)
     }
 
-    private fun createResponse(exception: Exception, request: WebRequest): ApiErrorResponse {
+    private fun createResponse(exception: Exception, request: WebRequest): ApiError {
         val errorMessage = exception.message
         val uri = request.getDescription(false) // Get requested uri, boolean value indicates whether or not the port is included.
-        val errorResponse = ApiErrorResponse(uri, errorMessage, Date())
+        val errorResponse = ApiError(uri, errorMessage, Date())
 
         return errorResponse
     }

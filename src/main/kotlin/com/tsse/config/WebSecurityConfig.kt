@@ -17,13 +17,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
  */
 @Configuration
 @EnableWebSecurity
-class WebSecurityConfig : WebSecurityConfigurerAdapter() {
-
-    @Autowired
-    lateinit var authEntryPoint: AuthenticationEntryPoint
-
-    @Autowired
-    lateinit var corsFilter: CorsFilter
+class WebSecurityConfig(val authEntryPoint: AuthenticationEntryPoint, val corsFilter: CorsFilter) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity?) {
         http?.let {
@@ -31,8 +25,6 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                     .addFilterBefore(corsFilter, BasicAuthenticationFilter::class.java)
                     .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/api/users").permitAll()
-                    .antMatchers("/api/users").hasAuthority("ADMIN")
-                    .antMatchers(HttpMethod.DELETE).hasAuthority("ADMIN")
                     .anyRequest().authenticated()
                     .and()
                     .httpBasic().authenticationEntryPoint(authEntryPoint)

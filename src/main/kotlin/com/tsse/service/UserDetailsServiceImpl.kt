@@ -18,7 +18,7 @@ class UserDetailsServiceImpl(private val repository: UserRepository) : UserDetai
     override fun loadUserByUsername(username: String): UserDetails {
         val user: User = repository.findByUsername(username) ?: throw UsernameNotFoundException("User not found for username \'$username\'")
 
-        return SpringUser(user.username, user.password, AuthorityUtils.createAuthorityList())
+        return SpringUser(user.username, user.password, AuthorityUtils.createAuthorityList(user.role))
     }
 
 }
