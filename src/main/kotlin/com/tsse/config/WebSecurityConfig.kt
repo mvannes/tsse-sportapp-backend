@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.AuthenticationEntryPoint
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 
 /**
  * Created by boydhogerheijde on 16/05/2017.
@@ -21,9 +22,13 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     @Autowired
     lateinit var authEntryPoint: AuthenticationEntryPoint
 
+    @Autowired
+    lateinit var corsFilter: CorsFilter
+
     override fun configure(http: HttpSecurity?) {
         http?.let {
             http
+                    .addFilterBefore(corsFilter, BasicAuthenticationFilter::class.java)
                     .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/api/users").permitAll()
                     .antMatchers("/api/users").hasAuthority("ADMIN")

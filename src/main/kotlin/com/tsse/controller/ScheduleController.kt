@@ -14,7 +14,7 @@ import javax.validation.Valid
  * @version 1.0.0
  */
 @RestController
-@RequestMapping("/api/schedule")
+@RequestMapping("/api/schedules")
 class ScheduleController(private val service: ScheduleService) {
 
     @PostMapping

@@ -20,7 +20,6 @@ class AuthenticationConfig : GlobalAuthenticationConfigurerAdapter() {
     lateinit var encoder: PasswordEncoder
 
     override fun init(auth: AuthenticationManagerBuilder?) {
-        auth?.userDetailsService(userDetailsService)
-                ?.passwordEncoder(encoder)
+        auth?.userDetailsService(userDetailsService)?.passwordEncoder(encoder)
     }
 }
