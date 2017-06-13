@@ -1,6 +1,7 @@
 package com.tsse.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.tsse.domain.ResourceNotFoundException
 import com.tsse.domain.model.Exercise
 import com.tsse.service.ExerciseService
 import org.hamcrest.Matchers.equalTo
@@ -15,7 +16,6 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
-import org.springframework.data.rest.webmvc.ResourceNotFoundException
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc

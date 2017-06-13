@@ -2,20 +2,24 @@ package com.tsse.service
 
 import com.tsse.domain.ResourceNotFoundException
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * Created by boydhogerheijde on 31/05/2017.
  */
+@Transactional
 abstract class AbstractService<T> : ResourceService<T> {
 
     override fun create(resource: T): T {
         return repository().save(resource)
     }
 
+    @Transactional(readOnly = true)
     override fun findAll(): List<T> {
         return repository().findAll()
     }
 
+    @Transactional(readOnly = true)
     override fun findOne(id: Long): T {
         return repository().findOne(id) ?: throw ResourceNotFoundException(id)
     }

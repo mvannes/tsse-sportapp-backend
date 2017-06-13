@@ -2,10 +2,12 @@ package com.tsse.config
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.SerializationFeature
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import java.util.*
@@ -16,6 +18,13 @@ import java.util.*
 @Configuration
 @EnableWebMvc
 class WebMvcConfig : WebMvcConfigurerAdapter() {
+
+    override fun configureMessageConverters(converters: MutableList<HttpMessageConverter<*>>?) {
+        converters?.apply {
+            add(jsonConverter())
+            add(xmlConverter())
+        }
+    }
 
     override fun extendMessageConverters(converters: MutableList<HttpMessageConverter<*>>) {
         val jsonConverterFound: Optional<HttpMessageConverter<*>> = converters
@@ -28,5 +37,15 @@ class WebMvcConfig : WebMvcConfigurerAdapter() {
             jsonConverter.objectMapper.enable(SerializationFeature.INDENT_OUTPUT)
             jsonConverter.objectMapper.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
         }
+    }
+
+    @Bean
+    fun jsonConverter(): MappingJackson2HttpMessageConverter {
+        return MappingJackson2HttpMessageConverter()
+    }
+
+    @Bean
+    fun xmlConverter(): MappingJackson2XmlHttpMessageConverter {
+        return MappingJackson2XmlHttpMessageConverter()
     }
 }
