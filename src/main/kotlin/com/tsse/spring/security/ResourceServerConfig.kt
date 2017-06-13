@@ -26,7 +26,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
  */
 @Configuration
 @EnableResourceServer
-@EnableWebSecurity
 class ResourceServerConfig(private val userDetailsService: UserDetailsService,
                            private val corsFilter: CorsFilter) : ResourceServerConfigurerAdapter() {
 
@@ -39,6 +38,8 @@ class ResourceServerConfig(private val userDetailsService: UserDetailsService,
         http?.let {
             http
                 .authorizeRequests()
+                    .antMatchers("/api/users**")
+                        .access("#oauth2.hasScope('trust')")
                     .anyRequest()
                     .authenticated()
                 .and()

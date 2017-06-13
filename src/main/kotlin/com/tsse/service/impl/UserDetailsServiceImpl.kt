@@ -20,8 +20,10 @@ import org.springframework.security.core.userdetails.User as SpringUser
 class UserDetailsServiceImpl(private val repository: UserRepository) : UserDetailsService {
 
     override fun loadUserByUsername(username: String): UserDetails {
+        // Getting user by his/her username, if one is not found an exception will be thrown to notify spring security.
         val user: User = repository.findByName(username) ?: throw UsernameNotFoundException("User not found for name \'$username\'")
 
+        // Retrieving a user his/her roles to eventually get its authorities.
         val roles: Set<Role> = user.roles ?: HashSet<Role>()
         val authorities = HashSet<Authority>()
 
@@ -35,6 +37,7 @@ class UserDetailsServiceImpl(private val repository: UserRepository) : UserDetai
                 .collect(Collectors.toList<String>())
                 .toTypedArray()
 
+        // Creating a list of authorities based on the authorities a role of a user has.
         val grantedAuthorities = AuthorityUtils.createAuthorityList(*authorityStrings)
 
         return SpringUser(user.name, user.password, grantedAuthorities)

@@ -81,8 +81,12 @@ class AuthorizationServerConfig(private val authenticationManager: Authenticatio
     @Bean
     fun accessTokenConverter(): JwtAccessTokenConverter {
         val tokenConverter = JwtAccessTokenConverter()
+
+        // Creating a key store factory object which looks up the passed in resource, in this case our key store.
+        // This is used to asynchronously sign our JWT tokens.
         val keyStoreKeyFactory = KeyStoreKeyFactory(ClassPathResource("jwt.jks"), "tssesport".toCharArray())
         tokenConverter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"))
+
         return tokenConverter
     }
 
