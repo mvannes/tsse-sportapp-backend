@@ -24,7 +24,8 @@ import javax.validation.ConstraintViolationException
  * Global exception handler for handling exceptions thrown by rest controller methods.
  *
  * @author Boyd Hogerheijde
- * @version 1.0.0
+ * @author Fabian de Almeida Ramos
+ * @version 1.1.0
  */
 @ControllerAdvice(basePackages = arrayOf("com.tsse.controller"), annotations = arrayOf(RestController::class))
 class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
@@ -45,18 +46,18 @@ class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
         return handleException(exception, request, HttpStatus.CONFLICT)
     }
 
-    @ExceptionHandler(ConstraintViolationException::class)
-    fun handleInvalidForm(exception: ConstraintViolationException, request: WebRequest): ResponseEntity<Any> {
-        val errorMessages = exception.constraintViolations.map { it.message }
-
-        return handleException(DataIntegrityException(errorMessages), request, HttpStatus.BAD_REQUEST)
-    }
-
     @ExceptionHandler(DataIntegrityViolationException::class)
     fun handleDataIntegrityException(exception: DataIntegrityViolationException, request: WebRequest): ResponseEntity<Any> {
         log.error("Data integrity exception caught: $exception")
 
         return handleException(exception, request, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(ConstraintViolationException::class)
+    fun handleInvalidForm(exception: ConstraintViolationException, request: WebRequest): ResponseEntity<Any> {
+        val errorMessages = exception.constraintViolations.map { it.message }
+
+        return handleException(DataIntegrityException(errorMessages), request, HttpStatus.BAD_REQUEST)
     }
 
     //As we're not creating any transactions ourselves, these exceptions only occur because of ConstraintViolationExceptions.
