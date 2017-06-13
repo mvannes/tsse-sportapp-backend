@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.NotBlank
 import javax.persistence.*
 
 /**
- * Created by boydhogerheijde on 08/05/2017.
+ * @author Boyd Hogerheijde
  */
 @Entity
 class Exercise() {
@@ -15,15 +15,18 @@ class Exercise() {
     val id: Long = 0
 
     @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false)
     var muscleGroup: MuscleGroup = MuscleGroup.DEFAULT
 
     @ElementCollection(targetClass = String::class)
     var mediaFiles: List<String> = arrayListOf()
 
     @NotBlank(message = "Name cannot be empty.")
+    @Column(unique = true, nullable = false)
     lateinit var name: String
 
     @NotBlank(message = "Description cannot be empty.")
+    @Column(nullable = false)
     lateinit var description: String
 
     constructor(name: String, description: String) : this() {

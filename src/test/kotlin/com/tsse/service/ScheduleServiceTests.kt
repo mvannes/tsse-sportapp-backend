@@ -3,6 +3,7 @@ package com.tsse.service
 import com.tsse.domain.ResourceNotFoundException
 import com.tsse.domain.model.Schedule
 import com.tsse.repository.ScheduleRepository
+import com.tsse.service.impl.ScheduleService
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import org.junit.Before

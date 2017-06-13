@@ -4,6 +4,7 @@ import com.tsse.domain.ResourceNotFoundException
 import com.tsse.domain.model.Exercise
 import com.tsse.domain.model.Workout
 import com.tsse.repository.WorkoutRepository
+import com.tsse.service.impl.WorkoutService
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import org.junit.Before

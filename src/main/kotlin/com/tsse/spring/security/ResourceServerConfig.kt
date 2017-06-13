@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 /**
  * TSSE Sport REST API
- * </p>
+ *
  * Class is used to configure web security and resource server properties.
  *
  * @author Boyd Hogerheijde

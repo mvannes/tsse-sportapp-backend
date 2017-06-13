@@ -1,7 +1,7 @@
 package com.tsse.controller
 
 import com.tsse.domain.model.Exercise
-import com.tsse.service.ExerciseService
+import com.tsse.service.impl.ExerciseService
 import org.springframework.http.HttpStatus
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*

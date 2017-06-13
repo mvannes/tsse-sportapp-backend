@@ -1,14 +1,15 @@
 package com.tsse.service
 
 import com.tsse.domain.ResourceNotFoundException
+import com.tsse.repository.ByNameApi
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.transaction.annotation.Transactional
 
 /**
- * Created by boydhogerheijde on 31/05/2017.
+ * @author Boyd Hogerheijde
  */
 @Transactional
-abstract class AbstractService<T> : ResourceService<T> {
+abstract class AbstractResourceService<T> : ResourceService<T> {
 
     override fun create(resource: T): T {
         return repository().save(resource)
@@ -24,6 +25,10 @@ abstract class AbstractService<T> : ResourceService<T> {
         return repository().findOne(id) ?: throw ResourceNotFoundException(id)
     }
 
+    override fun findByName(name: String): T? {
+        return findByNameApi()?.findByName(name)
+    }
+
     override fun update(resource: T, id: Long) {
         repository().save(resource)
     }
@@ -37,4 +42,6 @@ abstract class AbstractService<T> : ResourceService<T> {
     }
 
     abstract fun repository(): JpaRepository<T, Long>
+
+    abstract fun findByNameApi(): ByNameApi<T>?
 }

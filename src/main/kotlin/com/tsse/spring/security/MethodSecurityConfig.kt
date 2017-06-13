@@ -8,7 +8,7 @@ import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecur
 
 /**
  * TSSE Sport REST API
-
+ *
  * @author Boyd Hogerheijde
  */
 @Configuration

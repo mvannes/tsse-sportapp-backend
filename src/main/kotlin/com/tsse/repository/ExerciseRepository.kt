@@ -11,4 +11,4 @@ import org.springframework.stereotype.Repository
  * @version 1.0.1
  */
 @Repository
-interface ExerciseRepository : JpaRepository<Exercise, Long>
+interface ExerciseRepository : JpaRepository<Exercise, Long>, ByNameApi<Exercise>

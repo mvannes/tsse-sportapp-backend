@@ -3,7 +3,7 @@ package com.tsse.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.tsse.domain.ResourceNotFoundException
 import com.tsse.domain.model.Exercise
-import com.tsse.service.ExerciseService
+import com.tsse.service.impl.ExerciseService
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
 import org.junit.Before

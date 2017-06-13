@@ -1,7 +1,7 @@
 package com.tsse.controller
 
 import com.tsse.domain.model.Schedule
-import com.tsse.service.ScheduleService
+import com.tsse.service.impl.ScheduleService
 import org.springframework.http.HttpStatus
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*

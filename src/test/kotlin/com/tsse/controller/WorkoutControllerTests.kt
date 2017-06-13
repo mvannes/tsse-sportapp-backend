@@ -4,7 +4,7 @@ package com.tsse.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.tsse.domain.ResourceNotFoundException
 import com.tsse.domain.model.Workout
-import com.tsse.service.WorkoutService
+import com.tsse.service.impl.WorkoutService
 import org.hamcrest.Matchers
 import org.junit.Before
 import org.junit.Ignore

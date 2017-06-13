@@ -3,6 +3,7 @@ package com.tsse.service
 import com.tsse.domain.ResourceNotFoundException
 import com.tsse.domain.model.Exercise
 import com.tsse.repository.ExerciseRepository
+import com.tsse.service.impl.ExerciseService
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import org.junit.Before

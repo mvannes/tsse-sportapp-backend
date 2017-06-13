@@ -1,7 +1,7 @@
 package com.tsse.controller
 
 import com.tsse.domain.model.User
-import com.tsse.service.UserService
+import com.tsse.service.impl.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*
@@ -16,7 +16,7 @@ import javax.validation.Valid
  */
 @RestController
 @RequestMapping("/api/users")
-class UserController(val service: UserService) {
+class UserController(private val service: UserService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

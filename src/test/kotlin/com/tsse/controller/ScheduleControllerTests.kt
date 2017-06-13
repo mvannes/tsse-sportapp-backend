@@ -3,7 +3,7 @@ package com.tsse.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.tsse.domain.ResourceNotFoundException
 import com.tsse.domain.model.Schedule
-import com.tsse.service.ScheduleService
+import com.tsse.service.impl.ScheduleService
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Ignore

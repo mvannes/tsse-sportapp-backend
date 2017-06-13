@@ -11,6 +11,8 @@ interface ResourceService<T> {
 
     fun findOne(id: Long): T
 
+    fun findByName(name: String): T?
+
     fun update(resource: T, id: Long)
 
     fun deleteAll()
