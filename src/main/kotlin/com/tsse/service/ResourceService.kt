@@ -7,6 +7,8 @@ interface ResourceService<T> {
 
     fun create(resource: T): T
 
+    fun create(resource: List<T>): List<T>
+
     fun findAll(): List<T>
 
     fun findOne(id: Long): T

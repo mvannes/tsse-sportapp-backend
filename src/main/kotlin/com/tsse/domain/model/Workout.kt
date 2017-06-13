@@ -11,10 +11,20 @@ import javax.persistence.*
 @Entity
 class Workout() {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long = 0
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "WORKOUT_ID")
+    val id: Long = 0
+
     @NotBlank(message = "Name cannot be empty.") lateinit var name: String
     lateinit var description: String
-    @OneToMany(targetEntity = Exercise::class) var exercises: List<Exercise> = ArrayList()
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            joinColumns = arrayOf(JoinColumn(name = "WORKOUT_ID", referencedColumnName = "WORKOUT_ID")),
+            inverseJoinColumns = arrayOf(JoinColumn(name = "EXERCISE_ID", referencedColumnName = "EXERCISE_ID"))
+    )
+    var exercises: List<Exercise> = ArrayList()
 
     constructor(name: String, description: String, exercises: ArrayList<Exercise>) : this() {
         this.name = name

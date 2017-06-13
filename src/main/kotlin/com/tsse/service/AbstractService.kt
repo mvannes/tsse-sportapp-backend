@@ -12,6 +12,10 @@ abstract class AbstractService<T> : ResourceService<T> {
         return repository().save(resource)
     }
 
+    override fun create(resource: List<T>): List<T> {
+        return repository().save(resource)
+    }
+
     override fun findAll(): List<T> {
         return repository().findAll()
     }
