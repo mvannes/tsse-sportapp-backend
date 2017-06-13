@@ -1,8 +1,11 @@
 package com.tsse.config
 
+import org.apache.tomcat.util.ExceptionUtils
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
+import org.springframework.core.io.ClassPathResource
+import org.springframework.core.io.Resource
 import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -15,6 +18,7 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices
 import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory
 
 /**
  * TSSE Sport REST API
@@ -79,7 +83,8 @@ class AuthorizationServerConfig(private val authenticationManager: Authenticatio
     @Bean
     fun accessTokenConverter(): JwtAccessTokenConverter {
         val tokenConverter = JwtAccessTokenConverter()
-        tokenConverter.setSigningKey("placeholder_key")
+        val keyStoreKeyFactory = KeyStoreKeyFactory(ClassPathResource("jwt.jks"), "tssesport".toCharArray())
+        tokenConverter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"))
         return tokenConverter
     }
 
