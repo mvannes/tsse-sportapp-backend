@@ -38,7 +38,6 @@ class AuthorizationServerConfig(private val authenticationManager: Authenticatio
             tokenStore(tokenStore())
             .accessTokenConverter(accessTokenConverter())
             .authenticationManager(authenticationManager)
-            .userDetailsService(userDetailsService)
             .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
         }
         // @formatter:on
