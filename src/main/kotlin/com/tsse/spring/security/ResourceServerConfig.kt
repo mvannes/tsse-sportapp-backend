@@ -39,7 +39,7 @@ class ResourceServerConfig(private val userDetailsService: UserDetailsService,
             http
                 .authorizeRequests()
                     .antMatchers("/api/users**")
-                        .access("#oauth2.hasScope('trust')")
+                        .access("#oauth2.hasScope('web') or #oauth2.hasScope('android')")
                     .anyRequest()
                     .authenticated()
                 .and()
