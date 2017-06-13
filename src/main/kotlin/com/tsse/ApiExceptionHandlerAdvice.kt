@@ -34,7 +34,6 @@ class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
     @ExceptionHandler(ResourceNotFoundException::class)
     fun handleNotFound(exception: RuntimeException, request: WebRequest): ResponseEntity<Any> {
         log.error("Not found exception caught: $exception")
-        log.error("Root cause: " + ExceptionUtils.getRootCause(exception))
 
         return handleException(exception, request, HttpStatus.NOT_FOUND)
     }
@@ -42,7 +41,6 @@ class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
     @ExceptionHandler(ResourceAlreadyExistsException::class)
     fun handleConflict(exception: RuntimeException, request: WebRequest): ResponseEntity<Any> {
         log.error("Conflicting exception caught: $exception")
-        log.error("Root cause: " + ExceptionUtils.getRootCause(exception))
 
         return handleException(exception, request, HttpStatus.CONFLICT)
     }
@@ -57,7 +55,6 @@ class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
     @ExceptionHandler(DataIntegrityViolationException::class)
     fun handleDataIntegrityException(exception: DataIntegrityViolationException, request: WebRequest): ResponseEntity<Any> {
         log.error("Data integrity exception caught: $exception")
-        log.error("Root cause: " + ExceptionUtils.getRootCause(exception))
 
         return handleException(exception, request, HttpStatus.BAD_REQUEST)
     }
@@ -80,6 +77,8 @@ class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
         val errorMessage = exception.message
         val uri = request.getDescription(false) // Get requested uri, boolean value indicates whether or not the port is included.
         val errorResponse = ApiError(uri, errorMessage, ExceptionUtils.getRootCauseMessage(exception), Date())
+
+        log.error("Root cause: " + ExceptionUtils.getRootCause(exception))
 
         return errorResponse
     }
