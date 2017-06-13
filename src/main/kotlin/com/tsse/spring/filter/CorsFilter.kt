@@ -1,4 +1,4 @@
-package com.tsse.config
+package com.tsse.spring.filter
 
 import org.springframework.stereotype.Component
 import javax.servlet.*

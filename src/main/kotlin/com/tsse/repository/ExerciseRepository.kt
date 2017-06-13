@@ -1,6 +1,5 @@
 package com.tsse.repository
 
-import com.tsse.domain.model.Category
 import com.tsse.domain.model.Exercise
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository

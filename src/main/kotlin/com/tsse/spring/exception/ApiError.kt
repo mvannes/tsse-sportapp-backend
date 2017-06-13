@@ -1,4 +1,4 @@
-package com.tsse.domain
+package com.tsse.spring.exception
 
 import java.util.*
 

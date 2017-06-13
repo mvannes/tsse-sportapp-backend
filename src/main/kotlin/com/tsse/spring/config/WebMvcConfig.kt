@@ -1,4 +1,4 @@
-package com.tsse.config
+package com.tsse.spring.config
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.SerializationFeature
@@ -10,7 +10,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
-import java.util.*
 
 /**
  * Created by boydhogerheijde on 31/05/2017.
@@ -27,7 +26,7 @@ class WebMvcConfig : WebMvcConfigurerAdapter() {
     }
 
     override fun extendMessageConverters(converters: MutableList<HttpMessageConverter<*>>) {
-        val jsonConverterFound: Optional<HttpMessageConverter<*>> = converters
+        val jsonConverterFound: java.util.Optional<HttpMessageConverter<*>> = converters
                 .stream()
                 .filter { converter -> converter is MappingJackson2HttpMessageConverter }
                 .findFirst()

@@ -9,12 +9,22 @@ import javax.persistence.*
 @Entity
 class Exercise() {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long = 0
-    @Enumerated(EnumType.ORDINAL) var category: Category = Category.DEFAULT
-    @ElementCollection(targetClass = String::class) var mediaFiles: List<String> = arrayListOf()
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "EXERCISE_ID")
+    val id: Long = 0
 
-    @NotBlank(message = "Name cannot be empty.") lateinit var name: String
-    @NotBlank(message = "Description cannot be empty.") lateinit var description: String
+    @Enumerated(EnumType.ORDINAL)
+    var muscleGroup: MuscleGroup = MuscleGroup.DEFAULT
+
+    @ElementCollection(targetClass = String::class)
+    var mediaFiles: List<String> = arrayListOf()
+
+    @NotBlank(message = "Name cannot be empty.")
+    lateinit var name: String
+
+    @NotBlank(message = "Description cannot be empty.")
+    lateinit var description: String
 
     constructor(name: String, description: String) : this() {
         this.name = name
@@ -26,6 +36,6 @@ class Exercise() {
     }
 
     override fun toString(): String {
-        return "Exercise(id=$id, category=$category, mediaFiles=$mediaFiles, name='$name', description='$description')"
+        return "Exercise(id=$id, muscleGroup=$muscleGroup, mediaFiles=$mediaFiles, name='$name', description='$description')"
     }
 }

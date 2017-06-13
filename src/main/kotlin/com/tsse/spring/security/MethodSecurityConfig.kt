@@ -1,4 +1,4 @@
-package com.tsse.config
+package com.tsse.spring.security
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler

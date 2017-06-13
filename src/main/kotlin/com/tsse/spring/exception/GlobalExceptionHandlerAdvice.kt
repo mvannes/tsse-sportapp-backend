@@ -1,6 +1,5 @@
-package com.tsse
+package com.tsse.spring.exception
 
-import com.tsse.domain.ApiError
 import com.tsse.domain.DataIntegrityException
 import com.tsse.domain.ResourceAlreadyExistsException
 import com.tsse.domain.ResourceNotFoundException
@@ -23,13 +22,13 @@ import javax.validation.ConstraintViolationException
 /**
  * Global exception handler for handling exceptions thrown by rest controller methods.
  *
- * @author Boyd Hogerheijde
+ * @author Fabian de Almeida Ramos
  * @version 1.0.0
  */
 @ControllerAdvice(basePackages = arrayOf("com.tsse.controller"), annotations = arrayOf(RestController::class))
-class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
+class GlobalExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
 
-    private val log: Logger = LoggerFactory.getLogger(ApiExceptionHandlerAdvice::class.java)
+    private val log: Logger = LoggerFactory.getLogger(GlobalExceptionHandlerAdvice::class.java)
 
     @ExceptionHandler(ResourceNotFoundException::class)
     fun handleNotFound(exception: RuntimeException, request: WebRequest): ResponseEntity<Any> {
