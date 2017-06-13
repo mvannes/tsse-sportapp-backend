@@ -4,6 +4,7 @@ import com.tsse.domain.ApiError
 import com.tsse.domain.DataIntegrityException
 import com.tsse.domain.ResourceAlreadyExistsException
 import com.tsse.domain.ResourceNotFoundException
+import org.apache.commons.lang3.exception.ExceptionUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.dao.DataIntegrityViolationException
@@ -75,7 +76,9 @@ class ApiExceptionHandlerAdvice : ResponseEntityExceptionHandler() {
     private fun createResponse(exception: Exception, request: WebRequest): ApiError {
         val errorMessage = exception.message
         val uri = request.getDescription(false) // Get requested uri, boolean value indicates whether or not the port is included.
-        val errorResponse = ApiError(uri, errorMessage, Date())
+        val errorResponse = ApiError(uri, errorMessage, ExceptionUtils.getRootCauseMessage(exception), Date())
+
+        log.error("Root cause: " + ExceptionUtils.getRootCause(exception))
 
         return errorResponse
     }
