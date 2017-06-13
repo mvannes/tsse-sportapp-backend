@@ -5,7 +5,7 @@ import javax.servlet.*
 import javax.servlet.http.HttpServletResponse
 
 /**
- * Created by boydhogerheijde on 18/05/2017.
+ * @author Boyd Hogerheijde
  */
 @Component
 class CorsFilter : Filter {
@@ -21,10 +21,8 @@ class CorsFilter : Filter {
     }
 
     override fun init(config: FilterConfig?) {
-
     }
 
     override fun destroy() {
-
     }
 }

@@ -39,7 +39,7 @@ class ResourceServerConfig(private val userDetailsService: UserDetailsService,
             http
                 .authorizeRequests()
                     .antMatchers("/api/users**")
-                        .access("#oauth2.hasScope('web') or #oauth2.hasScope('android')")
+                        .access("#oauth2.hasScope('web') or #oauth2.hasScope('trust')")
                     .anyRequest()
                     .authenticated()
                 .and()
@@ -62,9 +62,7 @@ class ResourceServerConfig(private val userDetailsService: UserDetailsService,
     }
 
     @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
-    }
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Autowired
     fun configureGlobal(builder: AuthenticationManagerBuilder) {

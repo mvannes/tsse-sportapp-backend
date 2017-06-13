@@ -10,41 +10,44 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+import java.util.stream.Collectors
 
 /**
- * Created by boydhogerheijde on 31/05/2017.
+ * @author Boyd Hogerheijde
  */
 @Configuration
 @EnableWebMvc
 class WebMvcConfig : WebMvcConfigurerAdapter() {
 
-    override fun configureMessageConverters(converters: MutableList<HttpMessageConverter<*>>?) {
-        converters?.apply {
-            add(jsonConverter())
-            add(xmlConverter())
+    override fun configureMessageConverters(converters: MutableList<HttpMessageConverter<*>>) {
+        converters.apply {
+            add(jsonMessageConverter())
+            add(xmlMessageConverter())
         }
     }
 
     override fun extendMessageConverters(converters: MutableList<HttpMessageConverter<*>>) {
-        val jsonConverterFound: java.util.Optional<HttpMessageConverter<*>> = converters
+        // Fetching all jackson message converter to extend them.
+        val jacksonConverters = converters
                 .stream()
-                .filter { converter -> converter is MappingJackson2HttpMessageConverter }
-                .findFirst()
+                .filter { converter -> converter is AbstractJackson2HttpMessageConverter }
+                .collect(Collectors.toList())
 
-        if (jsonConverterFound.isPresent) {
-            val jsonConverter: AbstractJackson2HttpMessageConverter = jsonConverterFound.get() as AbstractJackson2HttpMessageConverter
-            jsonConverter.objectMapper.enable(SerializationFeature.INDENT_OUTPUT)
-            jsonConverter.objectMapper.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+        // Enabling pretty printing and failure on unknown passed in properties for all jackson message converters.
+        jacksonConverters.forEach { converter ->
+            val jacksonConverter = converter as AbstractJackson2HttpMessageConverter
+            jacksonConverter.objectMapper.enable(SerializationFeature.INDENT_OUTPUT)
+            jacksonConverter.objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
         }
     }
 
     @Bean
-    fun jsonConverter(): MappingJackson2HttpMessageConverter {
+    fun jsonMessageConverter(): MappingJackson2HttpMessageConverter {
         return MappingJackson2HttpMessageConverter()
     }
 
     @Bean
-    fun xmlConverter(): MappingJackson2XmlHttpMessageConverter {
+    fun xmlMessageConverter(): MappingJackson2XmlHttpMessageConverter {
         return MappingJackson2XmlHttpMessageConverter()
     }
 }
