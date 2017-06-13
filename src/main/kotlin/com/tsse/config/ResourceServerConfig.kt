@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 
 /**
  * TSSE Sport REST API
@@ -25,7 +26,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @Configuration
 @EnableResourceServer
 @EnableWebSecurity
-class ResourceServerConfig(private val userDetailsService: UserDetailsService) : ResourceServerConfigurerAdapter() {
+class ResourceServerConfig(private val userDetailsService: UserDetailsService,
+                           private val corsFilter: CorsFilter) : ResourceServerConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity?) {
@@ -44,6 +46,7 @@ class ResourceServerConfig(private val userDetailsService: UserDetailsService) :
                 .and()
                     .csrf()
                     .disable()
+                    .addFilterBefore(corsFilter, BasicAuthenticationFilter::class.java)
         }
         // @formatter:on
     }
