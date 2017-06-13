@@ -27,8 +27,7 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
  */
 @Configuration
 @EnableAuthorizationServer
-class AuthorizationServerConfig(private val authenticationManager: AuthenticationManager,
-                                private val userDetailsService: UserDetailsService) : AuthorizationServerConfigurerAdapter() {
+class AuthorizationServerConfig(private val authenticationManager: AuthenticationManager) : AuthorizationServerConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(endpoints: AuthorizationServerEndpointsConfigurer?) {
