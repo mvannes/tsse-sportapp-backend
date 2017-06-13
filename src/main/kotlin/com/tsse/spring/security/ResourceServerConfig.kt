@@ -48,9 +48,14 @@ class ResourceServerConfig(private val userDetailsService: UserDetailsService,
                 .and()
                     .csrf()
                     .disable()
-                    .addFilterBefore(corsFilter, BasicAuthenticationFilter::class.java)
+                .addFilterBefore(corsFilter, BasicAuthenticationFilter::class.java)
         }
         // @formatter:on
+    }
+
+    @Autowired
+    fun configureGlobal(builder: AuthenticationManagerBuilder) {
+        builder.authenticationProvider(authenticationProvider())
     }
 
     @Bean
@@ -63,9 +68,4 @@ class ResourceServerConfig(private val userDetailsService: UserDetailsService,
 
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
-
-    @Autowired
-    fun configureGlobal(builder: AuthenticationManagerBuilder) {
-        builder.authenticationProvider(authenticationProvider())
-    }
 }

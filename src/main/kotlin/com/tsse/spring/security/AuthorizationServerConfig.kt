@@ -89,9 +89,7 @@ class AuthorizationServerConfig(private val authenticationManager: Authenticatio
     }
 
     @Bean
-    fun tokenStore(): TokenStore {
-        return JwtTokenStore(accessTokenConverter())
-    }
+    fun tokenStore(): TokenStore = JwtTokenStore(accessTokenConverter())
 
     @Bean
     @Primary
